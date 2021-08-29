@@ -25,7 +25,8 @@ function drawBarChart(data, options, element) {
     "height": "80%",
     "display": "grid",
     "grid-template-columns": "[yAxisTitle-start] 1fr [yAxisTitle-end yAxis-start] 1fr [yAxis-end] repeat(10, [chartAreaColumn-start] 1fr [chartAreaColumn-end])",
-    "grid-template-rows": "repeat(10, [chartAreaRow-start] 1fr [chartAreaRow-end]) [xAxis-start] 1fr [xAxis-end xAxisTitle-start] 1fr [xAxisTitle-end]"
+    "grid-template-rows": "repeat(10, [chartAreaRow-start] 1fr [chartAreaRow-end]) [xAxis-start] 1fr [xAxis-end xAxisTitle-start] 1fr [xAxisTitle-end]",
+    "padding": "20px"
   };
   element.append(chartBody);
   $(".chartBody").css(chartBodyCSS);
@@ -36,8 +37,7 @@ function drawBarChart(data, options, element) {
     "grid-row": "chartAreaRow-start 1 / chartAreaRow-end 10",
     "display": "flex",
     "justify-content": "center",
-    "align-items": "center",
-    "border": "solid 1px black"
+    "align-items": "center"
   };
   $(".chartBody").append(yAxisTitle);
   $(".yAxisTitle").css(yAxisTitleCSS);
@@ -46,31 +46,35 @@ function drawBarChart(data, options, element) {
   var yAxis = '<div class="yAxis"><span>yAxis<span></div>';
   var yAxisCSS = {
     "grid-column": "yAxis-start / yAxis-end",
-    "grid-row": "chartAreaRow-start 1 / chartAreaRow-end 10",
-    "border": "solid 1px black"
+    "grid-row": "chartAreaRow-start 1 / chartAreaRow-end 10"
+    //"border-right": "solid 3px lightslategray"
   };
   $(".chartBody").append(yAxis);
   $(".yAxis").css(yAxisCSS);
 
-  var chartAreaColumns = [];
-  var chartAreaColumnCSS = [];
+  var chartAreaBlocks = [];
+  var chartAreaBlockCSS = [];
 
   for(var i = 0; i < 10; i++) {
-    chartAreaColumns.push('<div class="chartAreaColumn chartAreaColumn-' + (i + 1) + '"><span>c' + (i + 1) + '<span></div>');
-    chartAreaColumnCSS.push({
-      "grid-column": "chartAreaColumn-start " + (i + 1) + " / chartAreaColumn-end " + (i + 1),
-      "grid-row": "chartAreaRow-start 1 / chartAreaRow-end 10",
-      "border": "solid 1px black"
-    });
-    $(".chartBody").append(chartAreaColumns[i]);
-    $(".chartAreaColumn-" + (i + 1)).css(chartAreaColumnCSS[i]);
+    chartAreaBlocks[i] = [];
+    chartAreaBlockCSS[i] = [];
+
+    for(var j = 0; j < 10; j++) {
+      chartAreaBlocks[i].push('<div class="chartAreaBlock chartAreaBlock-' + (i + 1) + (j + 1) + '"><span>b' + (i + 1) + (j + 1) + '<span></div>');
+      chartAreaBlockCSS[i].push({
+        "grid-column": "chartAreaColumn-start " + (i + 1) + " / chartAreaColumn-end " + (i + 1),
+        "grid-row": "chartAreaRow-start " + (j + 1) + " / chartAreaRow-end " + (j + 1)
+      });
+      $(".chartBody").append(chartAreaBlocks[i][j]);
+      $(".chartAreaBlock-" + (i + 1) + (j + 1)).css(chartAreaBlockCSS[i][j]);
+    }
   }
 
   var xAxis = '<div class="xAxis"><span>xAxis<span></div>';
   var xAxisCSS = {
     "grid-column": "chartAreaColumn-start 1 / chartAreaColumn-end 10",
-    "grid-row": "xAxis-start / xAxis-end",
-    "border": "solid 1px black"
+    "grid-row": "xAxis-start / xAxis-end"
+    //"border-top": "solid 3px lightslategray"
   };
   $(".chartBody").append(xAxis);
   $(".xAxis").css(xAxisCSS);
@@ -81,8 +85,7 @@ function drawBarChart(data, options, element) {
     "grid-row": "xAxisTitle-start / xAxisTitle-end",
     "display": "flex",
     "justify-content": "center",
-    "align-items": "center",
-    "border": "solid 1px black"
+    "align-items": "center"
   };
   $(".chartBody").append(xAxisTitle);
   $(".xAxisTitle").css(xAxisTitleCSS);
@@ -108,13 +111,13 @@ $.when( $.ready ).then(function() {
   var chartOptions = {};
   var chartElement = $(".chart-container");
 
-  chartData["chartRawData"] = {
-    "Comedy": 4,
-    "Action": 5,
-    "Romance": 6,
-    "Drama": 1,
-    "SciFi": 4
-  };
+  chartData["chartRawData"] = [
+    {"movieType": "Comedy", "noOfPeople": 4},
+    {"movieType": "Action", "noOfPeople": 5},
+    {"movieType": "Action", "noOfPeople": 6},
+    {"movieType": "Drama", "noOfPeople": 1},
+    {"movieType": "SciFi", "noOfPeople": 4}
+  ];
   chartData["chartTitle"] = "Favorite Type of Movie";
   chartData["chartDescription"] = "Description";
   chartData["xAxisTitle"] = "Movies";
