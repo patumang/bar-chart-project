@@ -10,6 +10,7 @@ function createChartElement(chartTitle, chartDescription, element) {
     var chartHead = '<div class="chartHead">' + chartTitle + '</div>';
     var chartHeadCSS = {
       "background-color": "lemonchiffon",
+      "text-align": "center",
       "border": "solid 1px black"
     };
     element.append(chartHead);
@@ -30,6 +31,7 @@ function createChartElement(chartTitle, chartDescription, element) {
     var chartFooter = '<div class="chartFooter">' + chartDescription + '</div>';
     var chartFooterCSS = {
       "background-color": "mistyrose",
+      "text-align": "center",
       "border": "solid 1px black"
     };
     element.append(chartFooter);
@@ -58,7 +60,7 @@ function createChartBody(element) {
   $(".chartEditor").css(chartEditorCSS);
 }
 
-function createChartDisplay(element) {
+function createChartDisplay(noOfColumns, element) {
   var yAxisTitleContainer = '<div class="yAxisTitleContainer"></div>';
   var yAxisTitleContainerCSS = {
     "grid-column": "yAxisTitle-start / yAxisTitle-end",
@@ -81,10 +83,11 @@ function createChartDisplay(element) {
   element.append(yAxisContainer);
   $(".yAxisContainer").css(yAxisContainerCSS);
 
-  var chartAreaContainer = '<div class="chartAreaContainer">ChartArea</div>';
+  var chartAreaContainer = '<div class="chartAreaContainer"></div>';
   var chartAreaContainerCSS = {
     "grid-column": "chartAreaColumn-start / chartAreaColumn-end",
     "grid-row": "chartAreaRow-start / chartAreaRow-end",
+    "display": "flex",
     "border": "solid 1px black"
   };
   element.append(chartAreaContainer);
@@ -185,6 +188,25 @@ function createXAxisDataPointsContainer(element) {
   $(".xAxisDataPointsContainer").css(xAxisDataPointsContainerCSS);
 }
 
+function createChartAreaContainer(noOfColumns, element) {
+  var chartAreaDynamicColumns = [];
+  var chartAreaDynamicColumnsCSS = [];
+
+  for(var i = 0; i < noOfColumns; i++) {
+    chartAreaDynamicColumns.push('<div class="chartAreaDynamicCoumn chartAreaDynamicColumn-' + (i + 1) + '"><span>C' + (i + 1) + '<span></div>');
+    chartAreaDynamicColumnsCSS.push({
+      "flex": "1",
+      "display": "flex",
+      "flex-direction": "column",
+      "justify-content": "flex-end",
+      "align-items": "center",
+      "border": "solid 1px black"
+    });
+    element.append(chartAreaDynamicColumns[i]);
+    $(".chartAreaDynamicColumn-" + (i + 1)).css(chartAreaDynamicColumnsCSS[i]);
+  }
+}
+
 function drawBarChart(data, options, element) {
   var chartHeight;
   var chartWidth;
@@ -203,7 +225,7 @@ function drawBarChart(data, options, element) {
 
   createChartBody($(".chartBody"));
 
-  createChartDisplay($(".chartDisplay"));
+  createChartDisplay(noOfColumns, $(".chartDisplay"));
 
   createYAxisTitleContainer(data.yAxisTitle, $(".yAxisTitleContainer"));
 
@@ -217,100 +239,7 @@ function drawBarChart(data, options, element) {
   createXAxisDataPointsMarkContainer($(".xAxisContainer"));
   createXAxisDataPointsContainer($(".xAxisContainer"));
 
-  /* var chartHead = '<div class="chartHead">' + data.chartTitle + '</div>';
-  var chartHeadCSS = {
-    "background-color": "lemonchiffon",
-    "max-height": "4rem",
-    "display": "flex",
-    "justify-content": "center",
-    "align-items": "center"
-  };
-  element.append(chartHead);
-  $(".chartHead").css(chartHeadCSS);
-
-  var chartBody = '<div class="chartBody"></div>';
-  var chartBodyCSS = {
-    "background-color": "lightblue",
-    "height": "80%",
-    "display": "grid",
-    "grid-template-columns": "[yAxisTitle-start] 1fr [yAxisTitle-end yAxis-start] 1fr [yAxis-end] repeat(" + noOfColumns + ", [chartAreaColumn-start] 1fr [chartAreaColumn-end])",
-    "grid-template-rows": "repeat(10, [chartAreaRow-start] 1fr [chartAreaRow-end]) [xAxis-start] 1fr [xAxis-end xAxisTitle-start] 1fr [xAxisTitle-end]",
-    "padding": "20px"
-  };
-  element.append(chartBody);
-  $(".chartBody").css(chartBodyCSS);
-  console.log($(".chartBody").height());
-
-  var yAxisTitle = '<div class="yAxisTitle"><span class="rotateSpan">' + data.yAxisTitle + '<span></div>';
-  var yAxisTitleCSS = {
-    "grid-column": "yAxisTitle-start / yAxisTitle-end",
-    "grid-row": "chartAreaRow-start 1 / chartAreaRow-end 10",
-    "display": "flex",
-    "justify-content": "center",
-    "align-items": "center"
-  };
-  $(".chartBody").append(yAxisTitle);
-  $(".yAxisTitle").css(yAxisTitleCSS);
-  $(".rotateSpan").css({"-ms-transform": "rotate(-90deg)", "-webkit-transform": "rotate(-90deg)", "transform": "rotate(-90deg)"});
-
-  var yAxis = '<div class="yAxis"><span>yAxis<span></div>';
-  var yAxisCSS = {
-    "grid-column": "yAxis-start / yAxis-end",
-    "grid-row": "chartAreaRow-start 1 / chartAreaRow-end 10"
-    //"border-right": "solid 3px lightslategray"
-  };
-  $(".chartBody").append(yAxis);
-  $(".yAxis").css(yAxisCSS);
-
-  var chartAreaBlocks = [];
-  var chartAreaBlockCSS = [];
-
-  for(var i = 0; i < noOfColumns; i++) {
-    chartAreaBlocks[i] = [];
-    chartAreaBlockCSS[i] = [];
-
-    for(var j = 0; j < 10; j++) {
-      chartAreaBlocks[i].push('<div class="chartAreaBlock chartAreaBlock-' + (i + 1) + (j + 1) + '"><span>b' + (i + 1) + (j + 1) + '<span></div>');
-      chartAreaBlockCSS[i].push({
-        "grid-column": "chartAreaColumn-start " + (i + 1) + " / chartAreaColumn-end " + (i + 1),
-        "grid-row": "chartAreaRow-start " + (j + 1) + " / chartAreaRow-end " + (j + 1),
-        "border": "solid 1px black"
-      });
-      $(".chartBody").append(chartAreaBlocks[i][j]);
-      $(".chartAreaBlock-" + (i + 1) + (j + 1)).css(chartAreaBlockCSS[i][j]);
-    }
-  }
-
-  var xAxis = '<div class="xAxis"><span>xAxis<span></div>';
-  var xAxisCSS = {
-    "grid-column": "chartAreaColumn-start 1 / chartAreaColumn-end 10",
-    "grid-row": "xAxis-start / xAxis-end"
-    //"border-top": "solid 3px lightslategray"
-  };
-  $(".chartBody").append(xAxis);
-  $(".xAxis").css(xAxisCSS);
-
-  var xAxisTitle = '<div class="xAxisTitle"><span>' + data.xAxisTitle + '<span></div>';
-  var xAxisTitleCSS = {
-    "grid-column": "chartAreaColumn-start 1 / chartAreaColumn-end 10",
-    "grid-row": "xAxisTitle-start / xAxisTitle-end",
-    "display": "flex",
-    "justify-content": "center",
-    "align-items": "center"
-  };
-  $(".chartBody").append(xAxisTitle);
-  $(".xAxisTitle").css(xAxisTitleCSS);
-
-  var chartFooter = '<div class="chartFooter">' + data.chartDescription + '</div>';
-  var chartFooterCSS = {
-    "background-color": "mistyrose",
-    "max-height": "4rem",
-    "display": "flex",
-    "justify-content": "center",
-    "align-items": "center"
-  };
-  element.append(chartFooter);
-  $(".chartFooter").css(chartFooterCSS); */
+  createChartAreaContainer(noOfColumns, $(".chartAreaContainer"));
 
   return true;
 }
