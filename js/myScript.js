@@ -1,6 +1,5 @@
 /* eslint-disable no-inline-comments */
-function createChartHeadBodyFooter(chartTitle, chartDescription, element) {
-  console.log("hello");
+function createChartElement(chartTitle, chartDescription, element) {
   var elementCSS = {
     "display": "flex",
     "flex-direction": "column"
@@ -38,23 +37,152 @@ function createChartHeadBodyFooter(chartTitle, chartDescription, element) {
   }
 }
 
-function createChartDisplayAndEditor(element) {
+function createChartBody(element) {
   var chartDisplay = '<div class="chartDisplay"></div>';
   var chartDisplayCSS = {
     "background-color": "rgb(30,144,255)",
     "flex": "1",
+    "display": "grid",
+    "grid-template-columns": "[yAxisTitle-start] auto [yAxisTitle-end yAxis-start] auto [yAxis-end chartAreaColumn-start] 1fr [chartAreaColumn-end]",
+    "grid-template-rows": "[chartAreaRow-start] 1fr [chartAreaRow-end xAxis-start] auto [xAxis-end xAxisTitle-start] auto [xAxisTitle-end]",
     "border": "solid 1px black"
   };
-  $(".chartBody").append(chartDisplay);
+  element.append(chartDisplay);
   $(".chartDisplay").css(chartDisplayCSS);
 
   var chartEditor = '<div class="chartEditor">Editor</div>';
   var chartEditorCSS = {
-    "background-color": "rgb(0,191,255)",
+    "background-color": "rgb(0,191,255)"
+  };
+  element.append(chartEditor);
+  $(".chartEditor").css(chartEditorCSS);
+}
+
+function createChartDisplay(element) {
+  var yAxisTitleContainer = '<div class="yAxisTitleContainer"></div>';
+  var yAxisTitleContainerCSS = {
+    "grid-column": "yAxisTitle-start / yAxisTitle-end",
+    "grid-row": "chartAreaRow-start / chartAreaRow-end",
+    "display": "flex",
+    "justify-content": "center",
+    "align-items": "center",
     "border": "solid 1px black"
   };
-  $(".chartBody").append(chartEditor);
-  $(".chartEditor").css(chartEditorCSS);
+  element.append(yAxisTitleContainer);
+  $(".yAxisTitleContainer").css(yAxisTitleContainerCSS);
+
+  var yAxisContainer = '<div class="yAxisContainer"></div>';
+  var yAxisContainerCSS = {
+    "grid-column": "yAxis-start / yAxis-end",
+    "grid-row": "chartAreaRow-start / chartAreaRow-end",
+    "display": "flex",
+    "border": "solid 1px black"
+  };
+  element.append(yAxisContainer);
+  $(".yAxisContainer").css(yAxisContainerCSS);
+
+  var chartAreaContainer = '<div class="chartAreaContainer">ChartArea</div>';
+  var chartAreaContainerCSS = {
+    "grid-column": "chartAreaColumn-start / chartAreaColumn-end",
+    "grid-row": "chartAreaRow-start / chartAreaRow-end",
+    "border": "solid 1px black"
+  };
+  element.append(chartAreaContainer);
+  $(".chartAreaContainer").css(chartAreaContainerCSS);
+
+  var xAxisContainer = '<div class="xAxisContainer"></div>';
+  var xAxisContainerCSS = {
+    "grid-column": "chartAreaColumn-start / chartAreaColumn-end",
+    "grid-row": "xAxis-start / xAxis-end",
+    "display": "flex",
+    "flex-direction": "column",
+    "border": "solid 1px black"
+  };
+  element.append(xAxisContainer);
+  $(".xAxisContainer").css(xAxisContainerCSS);
+
+  var xAxisTitleContainer = '<div class="xAxisTitleContainer"></div>';
+  var xAxisTitleContainerCSS = {
+    "grid-column": "chartAreaColumn-start / chartAreaColumn-end",
+    "grid-row": "xAxisTitle-start / xAxisTitle-end",
+    "display": "flex",
+    "justify-content": "center",
+    "align-items": "center",
+    "border": "solid 1px black"
+  };
+  element.append(xAxisTitleContainer);
+  $(".xAxisTitleContainer").css(xAxisTitleContainerCSS);
+}
+
+function createYAxisTitleContainer(yAxisTitle, element) {
+  var yAxisTitleSpan = '<span class="yAxisTitleSpan">' + yAxisTitle + '<span>';
+  var yAxisTitleSpanCSS = {
+    "display": "block",
+    "-ms-transform": "rotate(-90deg)",
+    "-webkit-transform": "rotate(-90deg)",
+    "transform": "rotate(-90deg)"
+  };
+  element.append(yAxisTitleSpan);
+  $(".yAxisTitleSpan").css(yAxisTitleSpanCSS);
+}
+
+function createXAxisTitleContainer(xAxisTitle, element) {
+  var xAxisTitleSpan = '<span class="xAxisTitleSpan">' + xAxisTitle + '<span>';
+  element.append(xAxisTitleSpan);
+}
+
+function createYAxisDataPointsContainer(element) {
+  var yAxisDataPointsContainer = '<div class="yAxisDataPointsContainer">points<div>';
+  var yAxisDataPointsContainerCSS = {
+    "border": "solid 1px black"
+  };
+  element.append(yAxisDataPointsContainer);
+  $(".yAxisDataPointsContainer").css(yAxisDataPointsContainerCSS);
+}
+
+function createYAxisDataPointsMarkContainer(element) {
+  var yAxisDataPointsMarkContainer = '<div class="yAxisDataPointsMarkContainer">-<div>';
+  var yAxisDataPointsMarkContainerCSS = {
+    "border": "solid 1px black"
+  };
+  element.append(yAxisDataPointsMarkContainer);
+  $(".yAxisDataPointsMarkContainer").css(yAxisDataPointsMarkContainerCSS);
+}
+
+function createYAxisRulerContainer(element) {
+  var yAxisRulerContainer = '<div class="yAxisRulerContainer">|<div>';
+  var yAxisRulerContainerCSS = {
+    "border": "solid 1px black"
+  };
+  element.append(yAxisRulerContainer);
+  $(".yAxisRulerContainer").css(yAxisRulerContainerCSS);
+}
+
+function createXAxisRulerContainer(element) {
+  var xAxisRulerContainer = '<div class="xAxisRulerContainer">-<div>';
+  var xAxisRulerContainerCSS = {
+    "border": "solid 1px black"
+  };
+  element.append(xAxisRulerContainer);
+  $(".xAxisRulerContainer").css(xAxisRulerContainerCSS);
+}
+
+function createXAxisDataPointsMarkContainer(element) {
+  var xAxisDataPointsMarkContainer = '<div class="xAxisDataPointsMarkContainer">\'<div>';
+  var xAxisDataPointsMarkContainerCSS = {
+    "border": "solid 1px black"
+  };
+  element.append(xAxisDataPointsMarkContainer);
+  $(".xAxisDataPointsMarkContainer").css(xAxisDataPointsMarkContainerCSS);
+}
+
+function createXAxisDataPointsContainer(element) {
+  var xAxisDataPointsContainer = '<div class="xAxisDataPointsContainer">points<div>';
+  var xAxisDataPointsContainerCSS = {
+    "border": "solid 1px black"
+  };
+  element.append(xAxisDataPointsContainer);
+  $(".xAxisDataPointsContainer").css(xAxisDataPointsContainerCSS);
 }
 
 function drawBarChart(data, options, element) {
@@ -67,13 +195,27 @@ function drawBarChart(data, options, element) {
   var noOfColumns = data["chartRawData"].length;
   var noOfRows = 10;
 
-  createChartHeadBodyFooter(
+  createChartElement(
     data.chartTitle ? data.chartTitle : undefined,
     data.chartDescription ? data.chartDescription : undefined,
     element
   );
 
-  createChartDisplayAndEditor(element);
+  createChartBody($(".chartBody"));
+
+  createChartDisplay($(".chartDisplay"));
+
+  createYAxisTitleContainer(data.yAxisTitle, $(".yAxisTitleContainer"));
+
+  createXAxisTitleContainer(data.xAxisTitle, $(".xAxisTitleContainer"));
+
+  createYAxisDataPointsContainer($(".yAxisContainer"));
+  createYAxisDataPointsMarkContainer($(".yAxisContainer"));
+  createYAxisRulerContainer($(".yAxisContainer"));
+
+  createXAxisRulerContainer($(".xAxisContainer"));
+  createXAxisDataPointsMarkContainer($(".xAxisContainer"));
+  createXAxisDataPointsContainer($(".xAxisContainer"));
 
   /* var chartHead = '<div class="chartHead">' + data.chartTitle + '</div>';
   var chartHeadCSS = {
