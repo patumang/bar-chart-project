@@ -10,8 +10,7 @@ function createChartElement(chartTitle, chartDescription, element) {
     var chartHead = '<div class="chartHead">' + chartTitle + '</div>';
     var chartHeadCSS = {
       "background-color": "lemonchiffon",
-      "text-align": "center",
-      "border": "solid 1px black"
+      "text-align": "center"
     };
     element.append(chartHead);
     $(".chartHead").css(chartHeadCSS);
@@ -21,7 +20,6 @@ function createChartElement(chartTitle, chartDescription, element) {
   var chartBodyCSS = {
     "background-color": "lightblue",
     "flex": "1",
-    "border": "solid 1px black",
     "display": "flex"
   };
   element.append(chartBody);
@@ -31,8 +29,7 @@ function createChartElement(chartTitle, chartDescription, element) {
     var chartFooter = '<div class="chartFooter">' + chartDescription + '</div>';
     var chartFooterCSS = {
       "background-color": "mistyrose",
-      "text-align": "center",
-      "border": "solid 1px black"
+      "text-align": "center"
     };
     element.append(chartFooter);
     $(".chartFooter").css(chartFooterCSS);
@@ -42,12 +39,10 @@ function createChartElement(chartTitle, chartDescription, element) {
 function createChartBody(element) {
   var chartDisplay = '<div class="chartDisplay"></div>';
   var chartDisplayCSS = {
-    "background-color": "rgb(30,144,255)",
     "flex": "1",
     "display": "grid",
     "grid-template-columns": "[yAxisTitle-start] auto [yAxisTitle-end yAxis-start] auto [yAxis-end chartAreaColumn-start] 1fr [chartAreaColumn-end]",
-    "grid-template-rows": "[chartAreaRow-start] 1fr [chartAreaRow-end xAxis-start] auto [xAxis-end xAxisTitle-start] auto [xAxisTitle-end]",
-    "border": "solid 1px black"
+    "grid-template-rows": "[chartAreaRow-start] 1fr [chartAreaRow-end xAxis-start] auto [xAxis-end xAxisTitle-start] auto [xAxisTitle-end]"
   };
   element.append(chartDisplay);
   $(".chartDisplay").css(chartDisplayCSS);
@@ -67,8 +62,7 @@ function createChartDisplay(noOfColumns, element) {
     "grid-row": "chartAreaRow-start / chartAreaRow-end",
     "display": "flex",
     "justify-content": "center",
-    "align-items": "center",
-    "border": "solid 1px black"
+    "align-items": "center"
   };
   element.append(yAxisTitleContainer);
   $(".yAxisTitleContainer").css(yAxisTitleContainerCSS);
@@ -77,8 +71,7 @@ function createChartDisplay(noOfColumns, element) {
   var yAxisContainerCSS = {
     "grid-column": "yAxis-start / yAxis-end",
     "grid-row": "chartAreaRow-start / chartAreaRow-end",
-    "display": "flex",
-    "border": "solid 1px black"
+    "display": "flex"
   };
   element.append(yAxisContainer);
   $(".yAxisContainer").css(yAxisContainerCSS);
@@ -88,7 +81,7 @@ function createChartDisplay(noOfColumns, element) {
     "grid-column": "chartAreaColumn-start / chartAreaColumn-end",
     "grid-row": "chartAreaRow-start / chartAreaRow-end",
     "display": "flex",
-    "border": "solid 1px black"
+    "padding-top": "10px"
   };
   element.append(chartAreaContainer);
   $(".chartAreaContainer").css(chartAreaContainerCSS);
@@ -98,8 +91,7 @@ function createChartDisplay(noOfColumns, element) {
     "grid-column": "chartAreaColumn-start / chartAreaColumn-end",
     "grid-row": "xAxis-start / xAxis-end",
     "display": "flex",
-    "flex-direction": "column",
-    "border": "solid 1px black"
+    "flex-direction": "column"
   };
   element.append(xAxisContainer);
   $(".xAxisContainer").css(xAxisContainerCSS);
@@ -110,8 +102,7 @@ function createChartDisplay(noOfColumns, element) {
     "grid-row": "xAxisTitle-start / xAxisTitle-end",
     "display": "flex",
     "justify-content": "center",
-    "align-items": "center",
-    "border": "solid 1px black"
+    "align-items": "center"
   };
   element.append(xAxisTitleContainer);
   $(".xAxisTitleContainer").css(xAxisTitleContainerCSS);
@@ -137,7 +128,7 @@ function createXAxisTitleContainer(xAxisTitle, element) {
 function createYAxisDataPointsContainer(element) {
   var yAxisDataPointsContainer = '<div class="yAxisDataPointsContainer">points<div>';
   var yAxisDataPointsContainerCSS = {
-    "border": "solid 1px black"
+    "padding-top": "10px"
   };
   element.append(yAxisDataPointsContainer);
   $(".yAxisDataPointsContainer").css(yAxisDataPointsContainerCSS);
@@ -146,25 +137,28 @@ function createYAxisDataPointsContainer(element) {
 function createYAxisDataPointsMarkContainer(element) {
   var yAxisDataPointsMarkContainer = '<div class="yAxisDataPointsMarkContainer">-<div>';
   var yAxisDataPointsMarkContainerCSS = {
-    "border": "solid 1px black"
+    "padding-top": "10px"
   };
   element.append(yAxisDataPointsMarkContainer);
   $(".yAxisDataPointsMarkContainer").css(yAxisDataPointsMarkContainerCSS);
 }
 
 function createYAxisRulerContainer(element) {
-  var yAxisRulerContainer = '<div class="yAxisRulerContainer">|<div>';
+  var yAxisRulerContainer = '<div class="yAxisRulerContainer"><div>';
   var yAxisRulerContainerCSS = {
-    "border": "solid 1px black"
+    "background-color": "black",
+    "width": "5px"
   };
   element.append(yAxisRulerContainer);
   $(".yAxisRulerContainer").css(yAxisRulerContainerCSS);
 }
 
 function createXAxisRulerContainer(element) {
-  var xAxisRulerContainer = '<div class="xAxisRulerContainer">-<div>';
+  var xAxisRulerContainer = '<div class="xAxisRulerContainer"><div>';
   var xAxisRulerContainerCSS = {
-    "border": "solid 1px black"
+    "background-color": "black",
+    "height": "5px",
+    "margin-left": "-5px"
   };
   element.append(xAxisRulerContainer);
   $(".xAxisRulerContainer").css(xAxisRulerContainerCSS);
@@ -172,20 +166,20 @@ function createXAxisRulerContainer(element) {
 
 function createXAxisDataPointsMarkContainer(element) {
   var xAxisDataPointsMarkContainer = '<div class="xAxisDataPointsMarkContainer">\'<div>';
-  var xAxisDataPointsMarkContainerCSS = {
+  /* var xAxisDataPointsMarkContainerCSS = {
     "border": "solid 1px black"
-  };
+  }; */
   element.append(xAxisDataPointsMarkContainer);
-  $(".xAxisDataPointsMarkContainer").css(xAxisDataPointsMarkContainerCSS);
+  /* $(".xAxisDataPointsMarkContainer").css(xAxisDataPointsMarkContainerCSS); */
 }
 
 function createXAxisDataPointsContainer(element) {
   var xAxisDataPointsContainer = '<div class="xAxisDataPointsContainer">points<div>';
-  var xAxisDataPointsContainerCSS = {
+  /* var xAxisDataPointsContainerCSS = {
     "border": "solid 1px black"
-  };
+  }; */
   element.append(xAxisDataPointsContainer);
-  $(".xAxisDataPointsContainer").css(xAxisDataPointsContainerCSS);
+  /* $(".xAxisDataPointsContainer").css(xAxisDataPointsContainerCSS); */
 }
 
 function createChartAreaContainer(noOfColumns, element) {
@@ -193,17 +187,42 @@ function createChartAreaContainer(noOfColumns, element) {
   var chartAreaDynamicColumnsCSS = [];
 
   for(var i = 0; i < noOfColumns; i++) {
-    chartAreaDynamicColumns.push('<div class="chartAreaDynamicCoumn chartAreaDynamicColumn-' + (i + 1) + '"><span>C' + (i + 1) + '<span></div>');
+    chartAreaDynamicColumns.push('<div class="chartAreaDynamicCoumn chartAreaDynamicColumn-' + (i + 1) + '"></div>');
     chartAreaDynamicColumnsCSS.push({
       "flex": "1",
       "display": "flex",
       "flex-direction": "column",
       "justify-content": "flex-end",
-      "align-items": "center",
-      "border": "solid 1px black"
+      "align-items": "center"
     });
     element.append(chartAreaDynamicColumns[i]);
     $(".chartAreaDynamicColumn-" + (i + 1)).css(chartAreaDynamicColumnsCSS[i]);
+  }
+}
+
+function createChartBars(data, noOfColumns, noOfRows) {
+  var totalHeightBarContainer = $(".chartAreaDynamicCoumn").height();
+  var chartAreaRowMark = (data.yAxisRange.max - data.yAxisRange.min) / noOfRows;
+  var chartAreaRowMarkHeight = totalHeightBarContainer / noOfRows;
+  var heightOfEachRangePoint;
+
+  var chartAreaBars = [];
+  var chartAreaBarsCSS = [];
+
+  for(var i = 0; i < noOfColumns; i++) {
+    heightOfEachRangePoint = (chartAreaRowMarkHeight / chartAreaRowMark) * data.chartRawData[i]["noOfPeople"];
+    // eslint-disable-next-line radix
+    heightOfEachRangePoint = parseInt(heightOfEachRangePoint) + "px";
+    console.log(heightOfEachRangePoint);
+    chartAreaBars.push('<div class="chartAreaBar chartAreaBar-' + (i + 1) + '"><span>' + data.chartRawData[i]["noOfPeople"] + '<span></div>');
+    chartAreaBarsCSS.push({
+      "height": heightOfEachRangePoint,
+      "width": "50%",
+      "background-color": "rgb(253,245,230)",
+      "text-align": "center"
+    });
+    $(".chartAreaDynamicColumn-" + (i + 1)).append(chartAreaBars[i]);
+    $(".chartAreaBar-" + (i + 1)).css(chartAreaBarsCSS[i]);
   }
 }
 
@@ -241,6 +260,8 @@ function drawBarChart(data, options, element) {
 
   createChartAreaContainer(noOfColumns, $(".chartAreaContainer"));
 
+  createChartBars(data, noOfColumns, noOfRows);
+
   return true;
 }
 
@@ -251,7 +272,7 @@ $.when( $.ready ).then(function() {
   var chartOptions = {};
   var chartElement = $(".chart-container");
 
-  chartData["chartRawData"] = [
+  /* chartData["chartRawData"] = [
     {"movieType": "Comedy", "noOfPeople": 4},
     {"movieType": "Action", "noOfPeople": 5},
     {"movieType": "Action", "noOfPeople": 6},
@@ -262,7 +283,21 @@ $.when( $.ready ).then(function() {
   chartData["chartDescription"] = "Description";
   chartData["xAxisTitle"] = "Movies";
   chartData["yAxisTitle"] = "People";
-  chartData["yAxisRange"] = {"min": 0, "max": 10, "type": "number", "prefix": "", "postfix": ""};
+  chartData["yAxisRange"] = {"min": 0, "max": 10, "type": "number", "prefix": "", "postfix": ""}; */
+
+  chartData["chartRawData"] = [
+    {"fruitName": "Apple", "noOfPeople": 35},
+    {"fruitName": "Orange", "noOfPeople": 30},
+    {"fruitName": "Banana", "noOfPeople": 10},
+    {"fruitName": "Kiwifruit", "noOfPeople": 25},
+    {"fruitName": "Blueberry", "noOfPeople": 40},
+    {"fruitName": "Grapes", "noOfPeople": 5}
+  ];
+  chartData["chartTitle"] = "Nicest Fruit";
+  chartData["chartDescription"] = "Description";
+  chartData["xAxisTitle"] = "Fruits";
+  chartData["yAxisTitle"] = "People";
+  chartData["yAxisRange"] = {"min": 5, "max": 40, "type": "number", "prefix": "", "postfix": ""};
 
   chartOptions["chartHeight"] = 600;  //height in px
   chartOptions["chartWidth"] = 600;   //width in px
