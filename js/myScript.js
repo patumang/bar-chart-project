@@ -1,12 +1,12 @@
 /* eslint-disable no-inline-comments */
-function calculateHeightofBarChartComponents(data, noOfRows) {
-  var totalHeightBarContainer = $(".chartAreaContainer").height();
-  var heightOfEachRangePoint = Math.floor(totalHeightBarContainer / (data.yAxisRange.max - data.yAxisRange.min));
+function calculateHeightOfBarChartComponents(data, noOfRows) {
+  var totalHeightChartAreaContainer = $(".chartAreaContainer").height();
+  var heightOfEachRangePoint = Math.floor(totalHeightChartAreaContainer / (data.yAxisRange.max - data.yAxisRange.min));
   var chartAreaRowMark = Math.floor((data.yAxisRange.max - data.yAxisRange.min) / noOfRows);
   var chartAreaRowMarkHeight = heightOfEachRangePoint * chartAreaRowMark;
 
   return {
-    "totalHeightBarContainer": totalHeightBarContainer,
+    "totalHeightChartAreaContainer": totalHeightChartAreaContainer,
     "chartAreaRowMark": chartAreaRowMark,
     "chartAreaRowMarkHeight": chartAreaRowMarkHeight,
     "heightOfEachRangePoint": heightOfEachRangePoint
@@ -105,7 +105,7 @@ function createChartDisplay(element) {
   $(".xAxisContainer").css({
     "grid-column": "chartAreaColumn-start / chartAreaColumn-end",
     "grid-row": "xAxis-start / xAxis-end",
-    "display": "flex"
+    "display": "relative"
   });
 
   element.append('<div class="xAxisTitleContainer"></div>');
@@ -167,21 +167,6 @@ function createYAxisDataPointsContainer(noOfRows, barChartComponentsHeight, elem
   }
 }
 
-function createXAxisDataPointsContainer(chartRawData, noOfCols, element) {
-  var keys;
-
-  for(var i = 0; i < noOfCols; i++) {
-    keys = Object.keys(chartRawData[i]);
-    element.append(
-      '<div class="xAxisDataPointContainer xAxisDataPointContainer-' + (i + 1) + '">' + chartRawData[i][keys[0]] + '</div>'
-    );
-    $(".xAxisDataPointContainer-" + (i + 1)).css({
-      "flex": "1",
-      "text-align": "center"
-    });
-  }
-}
-
 function createChartAreaContainer(noOfColumns, element) {
   for(var i = 0; i < noOfColumns; i++) {
     element.append(
@@ -194,6 +179,75 @@ function createChartAreaContainer(noOfColumns, element) {
       "justify-content": "flex-end",
       "align-items": "center"
     });
+  }
+}
+
+function createXAxisDataPointsContainer(chartRawData, dataPointsOptions,  element) {
+
+  var parentElement;
+  var childElement;
+  var keys;
+
+  for(var i = 0; i < dataPointsOptions.noOfColumns; i++) {
+
+    keys = Object.keys(chartRawData[i]);
+    element.append(
+      '<div class="xAxisDataPointContainer xAxisDataPointContainer-' + (i + 1) + '"></div>'
+    );
+    $(".xAxisDataPointContainer-" + (i + 1)).css({
+      "width": dataPointsOptions.chartAreaEachColumnWidth + "px",
+      "display": "inline-block",
+      "margin": "5px 0",
+      "text-align": "center"
+    });
+
+    $(".xAxisDataPointContainer-" + (i + 1)).append(
+      '<div class="xAxisDataPointText">' + chartRawData[i][keys[0]] + '</div>'
+    );
+
+    if(dataPointsOptions.noOfColumns > 6 && dataPointsOptions.noOfColumns <= 15){
+      console.log(Math.pow((chartRawData[i][keys[0]]).length, 2));
+      $(".xAxisDataPointText").css({
+        "display": "inline-block",
+        "-ms-transform": "rotate(-45deg) translate(calc(-50% + 5px), -40%)",
+        "-webkit-transform": "rotate(-45deg) translate(calc(-50% + 5px), -40%)",
+        "transform": "rotate(-45deg) translate(calc(-50% + 5px), -40%)",
+        "white-space": "nowrap"
+      });
+
+      parentElement = $(".xAxisDataPointContainer-" + (i + 1));
+      childElement = parentElement.children('.xAxisDataPointText');
+
+      //checking if child height (we rotate to 90degree, so child height become width,
+      //... so we are comaring parent height with child width)
+      //... is greater than parent height
+      if (childElement.width() > parentElement.height()) {
+        parentElement.css({
+          "height": childElement.width()
+        });
+      }
+    } else if(dataPointsOptions.noOfColumns > 15){
+      console.log(Math.pow((chartRawData[i][keys[0]]).length, 2));
+      $(".xAxisDataPointText").css({
+        "display": "inline-block",
+        "-ms-transform": "rotate(-90deg) translate(calc(-50% + 15px), -40%)",
+        "-webkit-transform": "rotate(-90deg) translate(calc(-50% + 15px), -40%)",
+        "transform": "rotate(-90deg) translate(calc(-50% + 15px), -40%)",
+        "white-space": "nowrap"
+      });
+
+      parentElement = $(".xAxisDataPointContainer-" + (i + 1));
+      childElement = parentElement.children('.xAxisDataPointText');
+
+      //checking if child height (we rotate to 90degree, so child height become width,
+      //... so we are comaring parent height with child width)
+      //... is greater than parent height
+      if (childElement.width() > parentElement.height()) {
+        parentElement.css({
+          "height": childElement.width()
+        });
+      }
+    }
   }
 }
 
@@ -242,13 +296,17 @@ function drawBarChart(data, options, element) {
 
   createXAxisTitleContainer(data.xAxisTitle, $(".xAxisTitleContainer"));
 
-  var barChartComponentsHeight = calculateHeightofBarChartComponents(data, noOfRows);
+  var barChartComponentsHeight = calculateHeightOfBarChartComponents(data, noOfRows);
 
   createYAxisDataPointsContainer(noOfRows, barChartComponentsHeight, $(".yAxisContainer"));
 
-  createXAxisDataPointsContainer(data.chartRawData, noOfColumns, $(".xAxisContainer"));
-
   createChartAreaContainer(noOfColumns, $(".chartAreaContainer"));
+
+  createXAxisDataPointsContainer(
+    data.chartRawData,
+    {"noOfColumns": noOfColumns, "chartAreaEachColumnWidth": $(".chartAreaDynamicCoumn").width()},
+    $(".xAxisContainer")
+  );
 
   createChartBars(data.chartRawData, noOfColumns, barChartComponentsHeight);
 
