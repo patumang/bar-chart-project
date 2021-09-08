@@ -32,3 +32,17 @@ body {
   height: 650px;
   background-color: rgb(247, 246, 241);
 }
+
+.sliderContainer {
+  width: 100%;
+}
+
+.slider {
+  display: block;
+}
+
+.sliderValue {
+  margin-top: 10px;
+  text-align: center;
+  display: block;
+}
