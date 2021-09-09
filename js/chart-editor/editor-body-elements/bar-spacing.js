@@ -1,3 +1,4 @@
+import rangeSlider from '../../slider-range.js';
 export default function createBarSpacingBody(widthOfEachBarInPerc, element) {
   element.css({
     "display": "flex",

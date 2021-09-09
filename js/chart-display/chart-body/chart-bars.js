@@ -8,7 +8,7 @@ export default function createChartBars(data, element) {
     // eslint-disable-next-line radix
     heightOfCurrentBar = Math.floor(heightOfCurrentBar) + "px";
     element.append(
-      '<div class="chartAreaBar chartAreaBar-' + (i + 1) + '"><span>' + data.chartRawData[i]["noOfPeople"] + '<span></div>'
+      '<div class="chartAreaBar chartAreaBar-' + (i + 1) + '"><span>' + data.chartRawData[i][keys[1]] + '<span></div>'
     );
     $(".chartAreaBar-" + (i + 1)).css({
       "height": heightOfCurrentBar,

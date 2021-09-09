@@ -5,7 +5,7 @@ import createYAxisTitleContainer from './chart-display/chart-body/y-axis-title.j
 import createXAxisTitleContainer from './chart-display/chart-body/x-axis-title.js';
 import calculateHeightOfBarChartComponents from './bar-area-height.js';
 import calculateWidthOfBarChartComponents from './bar-area-width.js';
-import rangeSlider from './slider-range.js';
+//import rangeSlider from './slider-range.js';
 import createYAxisDataPointsContainer from './chart-display/chart-body/y-axis-datapoints.js';
 import createXAxisDataPointsContainer from './chart-display/chart-body/x-axis-datapoints.js';
 import createChartBars from './chart-display/chart-body/chart-bars.js';

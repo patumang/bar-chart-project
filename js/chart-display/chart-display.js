@@ -17,9 +17,12 @@ export default function createChartDisplay(chartTitle, chartDescription, element
   });
 
   if(chartDescription) {
-    element.append('<div class="chartFooter">' + chartDescription + '</div>');
+    element.append('<div class="chartFooter"></div>');
     $(".chartFooter").css({
       "text-align": "center"
     });
+    $(".chartFooter").append(
+      '<span>Bar Chart by <a href="https://github.com/patumang" target="_blank" >Umang Patel</a></span>'
+    );
   }
 }

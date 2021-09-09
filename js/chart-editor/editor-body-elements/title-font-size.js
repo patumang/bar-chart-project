@@ -1,3 +1,4 @@
+import rangeSlider from '../../slider-range.js';
 export default function createTitleFontSizeBody(element) {
   element.css({
     "display": "flex",
