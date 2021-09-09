@@ -2,9 +2,13 @@
   "name": "stretch-project-1",
   "version": "0.0.0",
   "description": "",
+  "type": "module",
   "devDependencies": {
     "eslint": "^3.19.0",
     "eslint-config-lighthouselabs": "lighthouse-labs/eslint-config-lighthouselabs"
+  },
+  "env": {
+    "es6": true
   },
   "dependencies": {
     "jquery": "^3.6.0"
