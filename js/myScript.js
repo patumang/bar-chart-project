@@ -1,6 +1,6 @@
 /* eslint-disable no-inline-comments */
-function calculateHeightOfBarChartComponents(data, noOfRows) {
-  var totalHeightChartAreaContainer = $(".chartAreaContainer").height();
+function calculateHeightOfBarChartComponents(data, noOfRows, element) {
+  var totalHeightChartAreaContainer = element.height();
   var heightOfEachRangePoint = Math.floor(totalHeightChartAreaContainer / (data.yAxisRange.max - data.yAxisRange.min));
   var chartAreaRowMark = Math.floor((data.yAxisRange.max - data.yAxisRange.min) / noOfRows);
   var chartAreaRowMarkHeight = heightOfEachRangePoint * chartAreaRowMark;
@@ -13,20 +13,57 @@ function calculateHeightOfBarChartComponents(data, noOfRows) {
   };
 }
 
-var rangeSlider = function(range, value){
+function calculateWidthOfBarChartComponents(noOfColumns, element) {
+  var totalWidthChartAreaContainer = element.width();
+  var initialWidthOfEachBar = Math.floor(totalWidthChartAreaContainer / noOfColumns);
+  var widthOfEachBarInPerc =  Math.floor((100 * initialWidthOfEachBar) / totalWidthChartAreaContainer);
+
+  return {
+    "totalWidthChartAreaContainer": totalWidthChartAreaContainer,
+    "initialWidthOfEachBar": initialWidthOfEachBar,
+    "widthOfEachBarInPerc": widthOfEachBarInPerc
+  };
+}
+
+var rangeSlider = function(modifier, range, value){
   range.on('input', function(){
-    $(this).next(value).html(this.value);
-    $(".chartHead").css("font-size", this.value + "px");
+    if(value) {
+      $(this).next(value).html(this.value);
+    }
+    if(modifier === "titleFontSize"){
+      $(".chartHead").css("font-size", this.value + "px");
+    }
+    else if(modifier === "barSpacing"){
+      $('.chartAreaBar').css("width", this.value + "%");
+      $('.xAxisDataPointContainer').css("width", this.value + "%");
+    }
   });
 };
 
-function createChartElement(chartTitle, chartDescription, element) {
+function createChartElement(element) {
   element.css({
     "display": "flex",
-    "background-color": "transparent",
+    "background-color": "transparent"
+  });
+
+  element.append('<div class="chartDisplay"></div>');
+  $(".chartDisplay").css({
+    "flex": "1",
+    "display": "flex",
     "flex-direction": "column"
   });
 
+  element.append('<div class="chartEditor"></div>');
+  $(".chartEditor").css({
+    "display": "flex",
+    "flex-direction": "column",
+    "justify-content": "center",
+    "border": "solid 1px lightgray",
+    "padding": "10px 5px"
+  });
+}
+
+function createChartDisplay(chartTitle, chartDescription, element) {
   if(chartTitle) {
     element.append('<div class="chartHead">' + chartTitle + '</div>');
     $(".chartHead").css({
@@ -38,7 +75,10 @@ function createChartElement(chartTitle, chartDescription, element) {
   element.append('<div class="chartBody"></div>');
   $(".chartBody").css({
     "flex": "1",
-    "display": "flex"
+    "padding": "5px",
+    "display": "grid",
+    "grid-template-columns": "[yAxisTitle-start] auto [yAxisTitle-end yAxis-start] auto [yAxis-end yAxisRuler-start] auto [yAxisRuler-end chartAreaColumn-start] 1fr [chartAreaColumn-end]",
+    "grid-template-rows": "[chartAreaRow-start] 1fr [chartAreaRow-end xAxisRuler-start] auto [xAxisRuler-end xAxis-start] auto [xAxis-end xAxisTitle-start] auto [xAxisTitle-end]"
   });
 
   if(chartDescription) {
@@ -50,24 +90,6 @@ function createChartElement(chartTitle, chartDescription, element) {
 }
 
 function createChartBody(element) {
-  element.append('<div class="chartDisplay"></div>');
-  $(".chartDisplay").css({
-    "flex": "1",
-    "padding": "5px",
-    "display": "grid",
-    "grid-template-columns": "[yAxisTitle-start] auto [yAxisTitle-end yAxis-start] auto [yAxis-end yAxisRuler-start] auto [yAxisRuler-end chartAreaColumn-start] 1fr [chartAreaColumn-end]",
-    "grid-template-rows": "[chartAreaRow-start] 1fr [chartAreaRow-end xAxisRuler-start] auto [xAxisRuler-end xAxis-start] auto [xAxis-end xAxisTitle-start] auto [xAxisTitle-end]"
-  });
-
-  element.append('<div class="chartEditor"></div>');
-  $(".chartEditor").css({
-    "display": "flex",
-    "flex-direction": "column",
-    "justify-content": "center"
-  });
-}
-
-function createChartDisplay(element) {
   element.append('<div class="yAxisTitleContainer"></div>');
   $(".yAxisTitleContainer").css({
     "grid-column": "yAxisTitle-start / yAxisTitle-end",
@@ -97,7 +119,9 @@ function createChartDisplay(element) {
   $(".chartAreaContainer").css({
     "grid-column": "chartAreaColumn-start / chartAreaColumn-end",
     "grid-row": "chartAreaRow-start / chartAreaRow-end",
-    "display": "flex"
+    "display": "flex",
+    "justify-content": "space-evenly",
+    "align-items": "flex-end"
   });
 
   element.append('<div class="xAxisRuler"></div>');
@@ -113,7 +137,8 @@ function createChartDisplay(element) {
   $(".xAxisContainer").css({
     "grid-column": "chartAreaColumn-start / chartAreaColumn-end",
     "grid-row": "xAxis-start / xAxis-end",
-    "display": "relative"
+    "display": "flex",
+    "justify-content": "space-evenly",
   });
 
   element.append('<div class="xAxisTitleContainer"></div>');
@@ -175,22 +200,43 @@ function createYAxisDataPointsContainer(noOfRows, barChartComponentsHeight, elem
   }
 }
 
-function createChartAreaContainer(noOfColumns, element) {
-  for(var i = 0; i < noOfColumns; i++) {
+function createXAxisDataPointsContainer(data, element) {
+
+  var keys;
+
+  for(var i = 0; i < data.noOfColumns; i++) {
+
+    keys = Object.keys(data.chartRawData[i]);
     element.append(
-      '<div class="chartAreaDynamicCoumn chartAreaDynamicColumn-' + (i + 1) + '"></div>'
+      '<div class="xAxisDataPointContainer xAxisDataPointContainer-' + (i + 1) + '"></div>'
     );
-    $(".chartAreaDynamicColumn-" + (i + 1)).css({
-      "flex": "1",
+    $(".xAxisDataPointContainer-" + (i + 1)).css({
+      "width": data.widthOfEachBarInPerc + "%",
       "display": "flex",
       "flex-direction": "column",
-      "justify-content": "flex-end",
       "align-items": "center"
+    });
+
+    $(".xAxisDataPointContainer-" + (i + 1)).append(
+      '<div class="xAxisDataPointMark xAxisDataPointMark-' + (i + 1) + '"></div>'
+    );
+    $(".xAxisDataPointMark-" + (i + 1)).css({
+      "height": "10px",
+      "width": "2px",
+      "background-color": "black"
+    });
+
+    $(".xAxisDataPointContainer-" + (i + 1)).append(
+      '<div class="xAxisDataPointText xAxisDataPointText-' + (i + 1) + '">' + data.chartRawData[i][keys[0]] + '</div>'
+    );
+    $(".yAxisDataPointText-" + (i + 1)).css({
+      "transform": "translateY(-50%)",
+      "margin-right": "5px"
     });
   }
 }
 
-function createXAxisDataPointsContainer(chartRawData, dataPointsOptions,  element) {
+/* function createXAxisDataPointsContainer(chartRawData, dataPointsOptions,  element) {
 
   var parentElement;
   var childElement;
@@ -257,23 +303,23 @@ function createXAxisDataPointsContainer(chartRawData, dataPointsOptions,  elemen
       }
     }
   }
-}
+} */
 
-function createChartBars(chartRawData, noOfColumns, barChartComponentsHeight) {
+function createChartBars(data, element) {
   var heightOfCurrentBar;
   var keys;
 
-  for(var i = 0; i < noOfColumns; i++) {
-    keys = Object.keys(chartRawData[i]);
-    heightOfCurrentBar = barChartComponentsHeight.heightOfEachRangePoint * chartRawData[i][keys[1]];
+  for(var i = 0; i < data.noOfColumns; i++) {
+    keys = Object.keys(data.chartRawData[i]);
+    heightOfCurrentBar = data.heightOfEachRangePoint * data.chartRawData[i][keys[1]];
     // eslint-disable-next-line radix
     heightOfCurrentBar = Math.floor(heightOfCurrentBar) + "px";
-    $(".chartAreaDynamicColumn-" + (i + 1)).append(
-      '<div class="chartAreaBar chartAreaBar-' + (i + 1) + '"><span>' + chartRawData[i]["noOfPeople"] + '<span></div>'
+    element.append(
+      '<div class="chartAreaBar chartAreaBar-' + (i + 1) + '"><span>' + data.chartRawData[i]["noOfPeople"] + '<span></div>'
     );
     $(".chartAreaBar-" + (i + 1)).css({
       "height": heightOfCurrentBar,
-      "width": "50%",
+      "width": data.widthOfEachBarInPerc + "%",
       "background-color": "lightgrey",
       "display": "flex",
       "justify-content": "center"
@@ -372,6 +418,7 @@ function createTitleFontSizeBody(element) {
   $(".chartHead").css("font-size", titleFontSize + "px");
 
   rangeSlider(
+    "titleFontSize",
     $('#titleFontSizeSlider'),
     $('#titleFontSizeSliderValue')
   );
@@ -426,6 +473,7 @@ function createColorBody(inputType, element) {
     $("." + inputTypeGeneralClass).on("click", function () {
       $(".yAxisDataPointMark").css("background-color", $(this).css("background-color"));
       $(".yAxisDataPointContainer").css("color", $(this).css("background-color"));
+      $(".xAxisDataPointMark").css("background-color", $(this).css("background-color"));
       $(".xAxisDataPointContainer").css("color", $(this).css("background-color"));
     });
   }
@@ -440,6 +488,35 @@ function createColorBody(inputType, element) {
   element.children().on("mouseover", function () {
     $(this).css("cursor", "pointer");
   });
+}
+
+function createBarSpacingBody(widthOfEachBarInPerc, element) {
+  element.css({
+    "display": "flex",
+    "padding": "10px 0px"
+  });
+
+  element.append('<div class="sliderContainer" id="barSpacingSliderContainer"></div>');
+
+  var currentBarSpacing;
+  if (widthOfEachBarInPerc / 2 > 1)
+    currentBarSpacing = Math.floor(widthOfEachBarInPerc / 2);
+  else
+    currentBarSpacing = widthOfEachBarInPerc;
+
+  $("#barSpacingSliderContainer").append(
+    '<input type="range" min="1" max="' + widthOfEachBarInPerc + '" value="' + currentBarSpacing + '" step="0.1" class="slider" id="barSpacingSlider">'
+  );
+
+  var barSpacing= $('#barSpacingSlider').val();
+  $('.chartAreaBar').css("width", barSpacing + "%");
+  $('.xAxisDataPointContainer').css("width", barSpacing + "%");
+
+  rangeSlider(
+    "barSpacing",
+    $('#barSpacingSlider'),
+    undefined
+  );
 }
 
 function createEditorBodyIndividualElement(elementDedails, parentElement) {
@@ -466,7 +543,7 @@ function createEditorBodyElementBody(elementDedails, parentElement) {
   });
 }
 
-function createEditorBodyElements(element) {
+function createEditorBodyElements(barChartComponentsWidth, element) {
   var editorBodyElements = [
     {
       "className": "barValuePositionContainer",
@@ -515,6 +592,12 @@ function createEditorBodyElements(element) {
       "titleClassName": "barLabelColorTitle",
       "title": "Bar Label Color",
       "bodyClassName": "barLabelColorBody"
+    },
+    {
+      "className": "barSpacingContainer",
+      "titleClassName": "barSpacingTitle",
+      "title": "Bar Spacing",
+      "bodyClassName": "barSpacingBody"
     }
   ];
 
@@ -548,6 +631,7 @@ function createEditorBodyElements(element) {
   createColorBody("axisLabelColor", $(".axisLabelColorBody"));
   createColorBody("dataPointColor", $(".dataPointColorBody"));
   createColorBody("barLabelColor", $(".barLabelColorBody"));
+  createBarSpacingBody(barChartComponentsWidth.widthOfEachBarInPerc, $(".barSpacingBody"));
 
   $(".editorBodyElementBody").hide();
 
@@ -567,25 +651,30 @@ function drawBarChart(data, options, element) {
   var noOfColumns = data["chartRawData"].length;
   var noOfRows = 10;
 
-  createChartElement(
+  createChartElement(element);
+
+  createChartDisplay(
     data.chartTitle ? data.chartTitle : undefined,
     data.chartDescription ? data.chartDescription : undefined,
-    element
+    $(".chartDisplay")
   );
 
   createChartBody($(".chartBody"));
-
-  createChartDisplay($(".chartDisplay"));
 
   createYAxisTitleContainer(data.yAxisTitle, $(".yAxisTitleContainer"));
 
   createXAxisTitleContainer(data.xAxisTitle, $(".xAxisTitleContainer"));
 
-  var barChartComponentsHeight = calculateHeightOfBarChartComponents(data, noOfRows);
+  var barChartComponentsHeight = calculateHeightOfBarChartComponents(
+    data, noOfRows, $(".chartAreaContainer")
+  );
+  var barChartComponentsWidth = calculateWidthOfBarChartComponents(
+    noOfColumns, $(".chartAreaContainer")
+  );
 
   createYAxisDataPointsContainer(noOfRows, barChartComponentsHeight, $(".yAxisContainer"));
 
-  createChartAreaContainer(noOfColumns, $(".chartAreaContainer"));
+  /* createChartAreaContainer(noOfColumns, $(".chartAreaContainer"));
 
   createXAxisDataPointsContainer(
     data.chartRawData,
@@ -593,11 +682,30 @@ function drawBarChart(data, options, element) {
     $(".xAxisContainer")
   );
 
-  createChartBars(data.chartRawData, noOfColumns, barChartComponentsHeight);
+  createChartBars(data.chartRawData, noOfColumns, barChartComponentsHeight); */
+
+  createXAxisDataPointsContainer(
+    {
+      "chartRawData": data.chartRawData,
+      "noOfColumns": noOfColumns,
+      "widthOfEachBarInPerc": barChartComponentsWidth.widthOfEachBarInPerc
+    },
+    $(".xAxisContainer")
+  );
+
+  createChartBars(
+    {
+      "chartRawData": data.chartRawData,
+      "noOfColumns": noOfColumns,
+      "heightOfEachRangePoint": barChartComponentsHeight.heightOfEachRangePoint,
+      "widthOfEachBarInPerc": barChartComponentsWidth.widthOfEachBarInPerc
+    },
+    $(".chartAreaContainer")
+  );
 
   createChartEditor($(".chartEditor"));
 
-  createEditorBodyElements($(".editorBody"));
+  createEditorBodyElements(barChartComponentsWidth, $(".editorBody"));
 
   return true;
 }
