@@ -1,3 +1,5 @@
+import calculateYAxisRangeMin from './y-axis-range-min.js';
+import calculateYAxisRangeMax from './y-axis-range-max.js';
 import createChartElement from './chart-element.js';
 import createChartDisplay from './chart-display/chart-display.js';
 import createChartBody from './chart-display/chart-body/chart-body.js';
@@ -13,33 +15,62 @@ import createChartEditor from './chart-editor/chart-editor.js';
 import createEditorBodyElements from './chart-editor/editor-body-elements/editor-body-elements.js';
 
 export default function drawBarChart(data, options, element) {
-  var chartHeight;
-  var chartWidth;
+  let chartHeight, chartWidth;
 
   options.chartHeight > element.height() ? chartHeight = element.height() : chartHeight = options.chartHeight;
   options.chartWidth > element.width() ? chartWidth = element.width() : chartWidth = options.chartWidth;
 
-  var noOfColumns = data["chartRawData"].length;
-  var noOfRows = 10;
+  let singleStack;
+  const rawDataKeys = Object.keys(data["chartRawData"]);
+  const rawDataValues = Object.values(data["chartRawData"]);
+
+  const noOfColumns = rawDataKeys.length;
+  let noOfRows = 10;
+
+  typeof rawDataValues[0] !== "Object" ? singleStack = true : singleStack = false;
+
+  let yAxisRange = [];
+
+  if(data.yAxisRange) {
+    if(data.yAxisRange.min)
+      yAxisRange[0] = data.yAxisRange.min;
+    else
+      yAxisRange[0] = calculateYAxisRangeMin();
+
+    if(data.yAxisRange.max)
+      yAxisRange[1] = data.yAxisRange.max;
+    else{
+      yAxisRange[1] = calculateYAxisRangeMax(singleStack, rawDataValues, noOfRows);
+    }
+  }
+  else {
+    yAxisRange[0] = calculateYAxisRangeMin();
+    yAxisRange[1] = calculateYAxisRangeMax(singleStack, rawDataValues, noOfRows);
+  }
 
   createChartElement(element);
 
   createChartDisplay(
     data.chartTitle ? data.chartTitle : undefined,
-    data.chartDescription ? data.chartDescription : undefined,
+    {
+      "yAxisTitle": data.yAxisTitle,
+      "xAxisTitle": data.xAxisTitle
+    },
     $(".chartDisplay")
   );
 
   createChartBody($(".chartBody"));
 
-  createYAxisTitleContainer(data.yAxisTitle, $(".yAxisTitleContainer"));
+  if(data.yAxisTitle)
+    createYAxisTitleContainer(data.yAxisTitle, $(".yAxisTitleContainer"));
 
-  createXAxisTitleContainer(data.xAxisTitle, $(".xAxisTitleContainer"));
+  if(data.xAxisTitle)
+    createXAxisTitleContainer(data.xAxisTitle, $(".xAxisTitleContainer"));
 
-  var barChartComponentsHeight = calculateHeightOfBarChartComponents(
-    data, noOfRows, $(".chartAreaContainer")
+  let barChartComponentsHeight = calculateHeightOfBarChartComponents(
+    yAxisRange, noOfRows, $(".chartAreaContainer")
   );
-  var barChartComponentsWidth = calculateWidthOfBarChartComponents(
+  let barChartComponentsWidth = calculateWidthOfBarChartComponents(
     noOfColumns, $(".chartAreaContainer")
   );
 
@@ -48,7 +79,7 @@ export default function drawBarChart(data, options, element) {
 
   createXAxisDataPointsContainer(
     {
-      "chartRawData": data.chartRawData,
+      "rawDataKeys": rawDataKeys,
       "noOfColumns": noOfColumns,
       "widthOfEachBarInPerc": barChartComponentsWidth.widthOfEachBarInPerc
     },
@@ -57,7 +88,8 @@ export default function drawBarChart(data, options, element) {
 
   createChartBars(
     {
-      "chartRawData": data.chartRawData,
+      "singleStack": singleStack,
+      "rawDataValues": rawDataValues,
       "noOfColumns": noOfColumns,
       "heightOfEachRangePoint": barChartComponentsHeight.heightOfEachRangePoint,
       "widthOfEachBarInPerc": barChartComponentsWidth.widthOfEachBarInPerc

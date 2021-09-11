@@ -1,4 +1,4 @@
-export default function createChartDisplay(chartTitle, chartDescription, element) {
+export default function createChartDisplay(chartTitle, axisTitles, element) {
   if(chartTitle) {
     element.append('<div class="chartHead">' + chartTitle + '</div>');
     $(".chartHead").css({
@@ -8,21 +8,33 @@ export default function createChartDisplay(chartTitle, chartDescription, element
   }
 
   element.append('<div class="chartBody"></div>');
+  let gridColumns, gridRows;
+
+  if(axisTitles.yAxisTitle)
+    gridColumns = "[yAxisTitle-start] auto [yAxisTitle-end yAxis-start] auto [yAxis-end yAxisRuler-start] auto [yAxisRuler-end chartAreaColumn-start] 1fr [chartAreaColumn-end]";
+  else
+    gridColumns = "[yAxis-start] auto [yAxis-end yAxisRuler-start] auto [yAxisRuler-end chartAreaColumn-start] 1fr [chartAreaColumn-end]";
+
+  if(axisTitles.xAxisTitle)
+    gridRows = "[chartAreaRow-start] 1fr [chartAreaRow-end xAxisRuler-start] auto [xAxisRuler-end xAxis-start] auto [xAxis-end xAxisTitle-start] auto [xAxisTitle-end]";
+  else
+    gridRows = "[chartAreaRow-start] 1fr [chartAreaRow-end xAxisRuler-start] auto [xAxisRuler-end xAxis-start] auto [xAxis-end]";
+
   $(".chartBody").css({
     "flex": "1",
     "padding": "5px",
     "display": "grid",
-    "grid-template-columns": "[yAxisTitle-start] auto [yAxisTitle-end yAxis-start] auto [yAxis-end yAxisRuler-start] auto [yAxisRuler-end chartAreaColumn-start] 1fr [chartAreaColumn-end]",
-    "grid-template-rows": "[chartAreaRow-start] 1fr [chartAreaRow-end xAxisRuler-start] auto [xAxisRuler-end xAxis-start] auto [xAxis-end xAxisTitle-start] auto [xAxisTitle-end]"
+    "grid-template-columns": gridColumns,
+    "grid-template-rows": gridRows,
+    "border": "solid 1px black"
   });
 
-  if(chartDescription) {
-    element.append('<div class="chartFooter"></div>');
-    $(".chartFooter").css({
-      "text-align": "center"
-    });
-    $(".chartFooter").append(
-      '<span>Bar Chart by <a href="https://github.com/patumang" target="_blank" >Umang Patel</a></span>'
-    );
-  }
+  element.append('<div class="chartFooter"></div>');
+  $(".chartFooter").css({
+    "text-align": "center",
+    "border": "solid 1px black"
+  });
+  $(".chartFooter").append(
+    '<span>Bar Chart by <a href="https://github.com/patumang" target="_blank" >Umang Patel</a></span>'
+  );
 }

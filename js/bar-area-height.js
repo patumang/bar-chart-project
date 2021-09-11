@@ -1,8 +1,10 @@
-export default function calculateHeightOfBarChartComponents(data, noOfRows, element) {
-  var totalHeightChartAreaContainer = element.height();
-  var heightOfEachRangePoint = Math.floor(totalHeightChartAreaContainer / (data.yAxisRange.max - data.yAxisRange.min));
-  var chartAreaRowMark = Math.floor((data.yAxisRange.max - data.yAxisRange.min) / noOfRows);
-  var chartAreaRowMarkHeight = heightOfEachRangePoint * chartAreaRowMark;
+export default function calculateHeightOfBarChartComponents(yAxisRange, noOfRows, element) {
+
+  let totalHeightChartAreaContainer = element.height();
+
+  let heightOfEachRangePoint = Math.floor(totalHeightChartAreaContainer / (yAxisRange[1] - yAxisRange[0]));
+  let chartAreaRowMark = Math.floor((yAxisRange[1] - yAxisRange[0]) / noOfRows);
+  let chartAreaRowMarkHeight = heightOfEachRangePoint * chartAreaRowMark;
 
   return {
     "totalHeightChartAreaContainer": totalHeightChartAreaContainer,

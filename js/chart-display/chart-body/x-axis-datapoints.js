@@ -1,10 +1,6 @@
 export default function createXAxisDataPointsContainer(data, element) {
 
-  var keys;
-
-  for(var i = 0; i < data.noOfColumns; i++) {
-
-    keys = Object.keys(data.chartRawData[i]);
+  for(let i = 0; i < data.noOfColumns; i++) {
     element.append(
       '<div class="xAxisDataPointContainer xAxisDataPointContainer-' + (i + 1) + '"></div>'
     );
@@ -25,7 +21,7 @@ export default function createXAxisDataPointsContainer(data, element) {
     });
 
     $(".xAxisDataPointContainer-" + (i + 1)).append(
-      '<div class="xAxisDataPointText xAxisDataPointText-' + (i + 1) + '">' + data.chartRawData[i][keys[0]] + '</div>'
+      '<div class="xAxisDataPointText xAxisDataPointText-' + (i + 1) + '">' + data.rawDataKeys[i] + '</div>'
     );
     $(".yAxisDataPointText-" + (i + 1)).css({
       "transform": "translateY(-50%)",

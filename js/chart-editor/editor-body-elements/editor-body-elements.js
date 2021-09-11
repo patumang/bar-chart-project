@@ -10,7 +10,6 @@ import createBarSpacingBody from './bar-spacing.js';
 
 export default function createEditorBodyElements(barChartComponentsWidth, element) {
 
-  console.log(editorBodyElements);
   for(var editorBodyElement of editorBodyElements) {
     createEditorBodyIndividualElement(
       {"class": editorBodyElement.className},
