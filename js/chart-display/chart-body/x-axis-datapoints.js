@@ -1,6 +1,7 @@
 export default function createXAxisDataPointsContainer(data, element) {
 
   for(let i = 0; i < data.noOfColumns; i++) {
+    console.log(data.widthOfEachBarInPerc);
     element.append(
       '<div class="xAxisDataPointContainer xAxisDataPointContainer-' + (i + 1) + '"></div>'
     );

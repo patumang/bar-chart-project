@@ -19,7 +19,7 @@ export default function createTitleFontSizeBody(element) {
   $(".chartHead").css("font-size", titleFontSize + "px");
 
   rangeSlider(
-    "titleFontSize",
+    {"modifier": "titleFontSize"},
     $('#titleFontSizeSlider'),
     $('#titleFontSizeSliderValue')
   );

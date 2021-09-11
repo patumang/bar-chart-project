@@ -25,14 +25,12 @@ export default function createChartDisplay(chartTitle, axisTitles, element) {
     "padding": "5px",
     "display": "grid",
     "grid-template-columns": gridColumns,
-    "grid-template-rows": gridRows,
-    "border": "solid 1px black"
+    "grid-template-rows": gridRows
   });
 
   element.append('<div class="chartFooter"></div>');
   $(".chartFooter").css({
-    "text-align": "center",
-    "border": "solid 1px black"
+    "text-align": "center"
   });
   $(".chartFooter").append(
     '<span>Bar Chart by <a href="https://github.com/patumang" target="_blank" >Umang Patel</a></span>'

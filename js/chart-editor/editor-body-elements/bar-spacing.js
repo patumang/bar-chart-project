@@ -1,5 +1,5 @@
 import rangeSlider from '../../slider-range.js';
-export default function createBarSpacingBody(widthOfEachBarInPerc, element) {
+export default function createBarSpacingBody(singleStack, widthOfEachBarInPerc, element) {
   element.css({
     "display": "flex",
     "padding": "10px 0px"
@@ -18,11 +18,16 @@ export default function createBarSpacingBody(widthOfEachBarInPerc, element) {
   );
 
   var barSpacing= $('#barSpacingSlider').val();
-  $('.chartAreaBar').css("width", barSpacing + "%");
+  if(singleStack){
+    $('.chartAreaBar').css("width", barSpacing + "%");
+  }
+  else {
+    $('.chartAreaBarColumn').css("width", barSpacing + "%");
+  }
   $('.xAxisDataPointContainer').css("width", barSpacing + "%");
 
   rangeSlider(
-    "barSpacing",
+    {"modifier":"barSpacing", "singleStack": singleStack},
     $('#barSpacingSlider'),
     undefined
   );

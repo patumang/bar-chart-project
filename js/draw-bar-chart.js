@@ -7,7 +7,6 @@ import createYAxisTitleContainer from './chart-display/chart-body/y-axis-title.j
 import createXAxisTitleContainer from './chart-display/chart-body/x-axis-title.js';
 import calculateHeightOfBarChartComponents from './bar-area-height.js';
 import calculateWidthOfBarChartComponents from './bar-area-width.js';
-//import rangeSlider from './slider-range.js';
 import createYAxisDataPointsContainer from './chart-display/chart-body/y-axis-datapoints.js';
 import createXAxisDataPointsContainer from './chart-display/chart-body/x-axis-datapoints.js';
 import createChartBars from './chart-display/chart-body/chart-bars.js';
@@ -20,14 +19,23 @@ export default function drawBarChart(data, options, element) {
   options.chartHeight > element.height() ? chartHeight = element.height() : chartHeight = options.chartHeight;
   options.chartWidth > element.width() ? chartWidth = element.width() : chartWidth = options.chartWidth;
 
-  let singleStack;
   const rawDataKeys = Object.keys(data["chartRawData"]);
   const rawDataValues = Object.values(data["chartRawData"]);
+  let rawDataStackKeys;
+  let rawDataStackValues = [];
 
   const noOfColumns = rawDataKeys.length;
   let noOfRows = 10;
 
-  typeof rawDataValues[0] !== "Object" ? singleStack = true : singleStack = false;
+  const singleStack =  typeof rawDataValues[0] !== "object" ? true : false;
+
+  if(!singleStack) {
+    rawDataStackKeys = Object.keys(rawDataValues[0]);
+    for(let i = 0; i < rawDataValues.length; i++){
+      rawDataStackValues[i] = [];
+      rawDataStackValues[i] = Object.values(rawDataValues[i]);
+    }
+  }
 
   let yAxisRange = [];
 
@@ -40,12 +48,20 @@ export default function drawBarChart(data, options, element) {
     if(data.yAxisRange.max)
       yAxisRange[1] = data.yAxisRange.max;
     else{
-      yAxisRange[1] = calculateYAxisRangeMax(singleStack, rawDataValues, noOfRows);
+      yAxisRange[1] = calculateYAxisRangeMax(
+        singleStack,
+        {"rawDataValues": rawDataValues, "rawDataStackValues": rawDataStackValues},
+        noOfRows
+      );
     }
   }
   else {
     yAxisRange[0] = calculateYAxisRangeMin();
-    yAxisRange[1] = calculateYAxisRangeMax(singleStack, rawDataValues, noOfRows);
+    yAxisRange[1] = calculateYAxisRangeMax(
+      singleStack,
+      {"rawDataValues": rawDataValues, "rawDataStackValues": rawDataStackValues},
+      noOfRows
+    );
   }
 
   createChartElement(element);
@@ -99,7 +115,7 @@ export default function drawBarChart(data, options, element) {
 
   createChartEditor($(".chartEditor"));
 
-  createEditorBodyElements(barChartComponentsWidth, $(".editorBody"));
+  createEditorBodyElements(singleStack, barChartComponentsWidth, $(".editorBody"));
 
   return true;
 }

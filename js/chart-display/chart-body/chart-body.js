@@ -47,7 +47,7 @@ export default function createChartBody(element) {
     "grid-column": "chartAreaColumn-start / chartAreaColumn-end",
     "grid-row": "xAxis-start / xAxis-end",
     "display": "flex",
-    "justify-content": "space-evenly",
+    "justify-content": "space-evenly"
   });
 
   element.append('<div class="xAxisTitleContainer"></div>');

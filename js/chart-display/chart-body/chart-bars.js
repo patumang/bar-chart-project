@@ -1,8 +1,8 @@
 export default function createChartBars(data, element) {
   let heightOfCurrentBar;
 
-  for(let i = 0; i < data.noOfColumns; i++) {
-    if(data.singleStack) {
+  if(data.singleStack) {
+    for(let i = 0; i < data.noOfColumns; i++) {
       heightOfCurrentBar = data.heightOfEachRangePoint * data.rawDataValues[i];
       // eslint-disable-next-line radix
       heightOfCurrentBar = Math.floor(heightOfCurrentBar) + "px";
@@ -12,6 +12,21 @@ export default function createChartBars(data, element) {
       );
       $(".chartAreaBar-" + (i + 1)).css({
         "height": heightOfCurrentBar,
+        "width": data.widthOfEachBarInPerc + "%",
+        "background-color": "lightgrey",
+        "display": "flex",
+        "justify-content": "center"
+      });
+    }
+  }
+  else {
+    console.log(data.widthOfEachBarInPerc);
+    for(let i = 0; i < data.noOfColumns; i++) {
+      element.append(
+        '<div class="chartAreaBarColumn chartAreaBarColumn-' + (i + 1) + '"></div>'
+      );
+      $(".chartAreaBarColumn-" + (i + 1)).css({
+        "height": "100%",
         "width": data.widthOfEachBarInPerc + "%",
         "background-color": "lightgrey",
         "display": "flex",

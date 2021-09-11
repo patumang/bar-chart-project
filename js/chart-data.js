@@ -14,20 +14,7 @@ chartData["xAxisTitle"] = "Movies";
 chartData["yAxisTitle"] = "People";
 chartData["yAxisRange"] = {"min": 0, "max": 10, "type": "number", "prefix": "", "postfix": ""}; */
 
-/* chartData["chartRawData"] = [
-  {"fruitName": "Apple", "noOfPeople": 36},
-  {"fruitName": "Orange", "noOfPeople": 30},
-  {"fruitName": "Banana", "noOfPeople": 10},
-  {"fruitName": "Kiwifruit", "noOfPeople": 25},
-  {"fruitName": "Blueberry", "noOfPeople": 40},
-  {"fruitName": "Grapes", "noOfPeople": 5}
-];
-chartData["chartTitle"] = "Nicest Fruit";
-chartData["chartDescription"] = "Description";
-chartData["xAxisTitle"] = "Fruits";
-chartData["yAxisTitle"] = "People";
-chartData["yAxisRange"] = {"min": 0, "max": 40, "type": "number", "prefix": "", "postfix": ""}; */
-chartData["chartRawData"] = {
+/* chartData["chartRawData"] = {
   "Apple": 36,
   "Orange": 30,
   "Banana": 10,
@@ -38,9 +25,9 @@ chartData["chartRawData"] = {
 chartData["chartTitle"] = "Nicest Fruit";
 chartData["xAxisTitle"] = "Fruits";
 chartData["yAxisTitle"] = "People";
-//chartData["yAxisRange"] = {"type": "number", "prefix": "", "postfix": ""};
+//chartData["yAxisRange"] = {"min": 0, "max": 40, "type": "number", "prefix": "", "postfix": ""}; */
 
-/* chartData["chartRawData"] = {
+chartData["chartRawData"] = {
   "Apples": {"John": 5, "Jane": 2, "Joe": 3},
   "Oranges": {"John": 3, "Jane": 2, "Joe": 4},
   "Pears": {"John": 4, "Jane": 3, "Joe": 4},
@@ -51,7 +38,7 @@ chartData["chartTitle"] = "Fruit Conception";
 chartData["xAxisTitle"] = "Fruits";
 chartData["yAxisTitle"] = "Conception";
 chartData["yAxisRange"] = {"type": "number"};
-//chartData["yAxisRange"] = {"min": 0, "max": 40, "type": "number", "prefix": "", "postfix": ""}; */
+//chartData["yAxisRange"] = {"min": 0, "max": 40, "type": "number", "prefix": "", "postfix": ""};
 
 chartOptions["chartHeight"] = 600;  //height in px
 chartOptions["chartWidth"] = 600;   //width in px

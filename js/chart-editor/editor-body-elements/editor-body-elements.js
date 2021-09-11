@@ -8,7 +8,7 @@ import createTitleFontSizeBody from './title-font-size.js';
 import createColorBody from './color-palette.js';
 import createBarSpacingBody from './bar-spacing.js';
 
-export default function createEditorBodyElements(barChartComponentsWidth, element) {
+export default function createEditorBodyElements(singleStack, barChartComponentsWidth, element) {
 
   for(var editorBodyElement of editorBodyElements) {
     createEditorBodyIndividualElement(
@@ -39,7 +39,7 @@ export default function createEditorBodyElements(barChartComponentsWidth, elemen
   createColorBody("axisLabelColor", $(".axisLabelColorBody"));
   createColorBody("dataPointColor", $(".dataPointColorBody"));
   createColorBody("barLabelColor", $(".barLabelColorBody"));
-  createBarSpacingBody(barChartComponentsWidth.widthOfEachBarInPerc, $(".barSpacingBody"));
+  createBarSpacingBody(singleStack, barChartComponentsWidth.widthOfEachBarInPerc, $(".barSpacingBody"));
 
   $(".editorBodyElementBody").hide();
 
