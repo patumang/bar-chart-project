@@ -24,9 +24,9 @@ export default function createYAxisDataPointsContainer(noOfRows, barChartCompone
       '<div class="yAxisDataPointMark yAxisDataPointMark-' + (i + 1) + '"></div>'
     );
     $(".yAxisDataPointMark-" + (i + 1)).css({
-      "height": "2px",
-      "width": "10px",
-      "background-color": "black"
+      "height": "1px",
+      "width": "5px",
+      "background-color": "gray"
     });
 
     currentMark += barChartComponentsHeight.chartAreaRowMark;

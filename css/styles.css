@@ -34,15 +34,14 @@ body {
 }
 
 .sliderContainer {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+  color: rgb(0, 60, 179)
 }
 
 .slider {
-  display: block;
-}
-
-.sliderValue {
-  margin-top: 10px;
-  text-align: center;
-  display: block;
+  width: 100%;
 }

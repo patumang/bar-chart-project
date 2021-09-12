@@ -5,10 +5,10 @@ import createEditorBodyElementBody from './element-body.js';
 import createBarValuePositionBody from './bar-value-position.js';
 import createChartTitleBody from './chart-title.js';
 import createTitleFontSizeBody from './title-font-size.js';
-import createColorBody from './color-palette.js';
+import createColorBody from './color-body.js';
 import createBarSpacingBody from './bar-spacing.js';
 
-export default function createEditorBodyElements(singleStack, barChartComponentsWidth, element) {
+export default function createEditorBodyElements(options, element) {
 
   for(var editorBodyElement of editorBodyElements) {
     createEditorBodyIndividualElement(
@@ -34,12 +34,19 @@ export default function createEditorBodyElements(singleStack, barChartComponents
   createBarValuePositionBody($(".barValuePositionBody"));
   createChartTitleBody($(".chartTitleBody"));
   createTitleFontSizeBody($(".titleFontSizeBody"));
-  createColorBody("titleColor", $(".titleColorBody"));
-  createColorBody("barColor", $(".barColorBody"));
-  createColorBody("axisLabelColor", $(".axisLabelColorBody"));
-  createColorBody("dataPointColor", $(".dataPointColorBody"));
-  createColorBody("barLabelColor", $(".barLabelColorBody"));
-  createBarSpacingBody(singleStack, barChartComponentsWidth.widthOfEachBarInPerc, $(".barSpacingBody"));
+  createColorBody({"inputType": "titleColor"}, $(".titleColorBody"));
+  createColorBody(
+    {
+      "inputType": "barColor",
+      "singleStack": options.singleStack,
+      "rawDataStackKeys": options.rawDataStackKeys
+    },
+    $(".barColorBody")
+  );
+  createColorBody({"inputType": "axisLabelColor"}, $(".axisLabelColorBody"));
+  createColorBody({"inputType": "dataPointColor"}, $(".dataPointColorBody"));
+  createColorBody({"inputType": "barLabelColor"}, $(".barLabelColorBody"));
+  createBarSpacingBody(options.singleStack, options.widthOfEachBarInPerc, $(".barSpacingBody"));
 
   $(".editorBodyElementBody").hide();
 

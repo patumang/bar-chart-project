@@ -16,12 +16,12 @@ export default function createChartBody(element) {
     "flex-direction": "column-reverse"
   });
 
-  element.append('<div class="yAxisRulerContainer"><div>');
-  $(".yAxisRulerContainer").css({
+  element.append('<div class="yAxisRuler"><div>');
+  $(".yAxisRuler").css({
     "grid-column": "yAxisRuler-start / yAxisRuler-end",
     "grid-row": "chartAreaRow-start / chartAreaRow-end",
-    "background-color": "black",
-    "width": "5px"
+    "background-color": "gray",
+    "width": "1px"
   });
 
   element.append('<div class="chartAreaContainer"></div>');
@@ -37,9 +37,9 @@ export default function createChartBody(element) {
   $(".xAxisRuler").css({
     "grid-column": "chartAreaColumn-start / chartAreaColumn-end",
     "grid-row": "xAxisRuler-start / xAxisRuler-end",
-    "background-color": "black",
-    "height": "5px",
-    "margin-left": "-5px"
+    "background-color": "gray",
+    "height": "1px",
+    "margin-left": "-1px"
   });
 
   element.append('<div class="xAxisContainer"></div>');

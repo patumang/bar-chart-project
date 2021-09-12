@@ -1,7 +1,6 @@
 export default function createXAxisDataPointsContainer(data, element) {
 
   for(let i = 0; i < data.noOfColumns; i++) {
-    console.log(data.widthOfEachBarInPerc);
     element.append(
       '<div class="xAxisDataPointContainer xAxisDataPointContainer-' + (i + 1) + '"></div>'
     );
@@ -16,18 +15,18 @@ export default function createXAxisDataPointsContainer(data, element) {
       '<div class="xAxisDataPointMark xAxisDataPointMark-' + (i + 1) + '"></div>'
     );
     $(".xAxisDataPointMark-" + (i + 1)).css({
-      "height": "10px",
-      "width": "2px",
-      "background-color": "black"
+      "height": "5px",
+      "width": "1px",
+      "background-color": "gray"
     });
 
     $(".xAxisDataPointContainer-" + (i + 1)).append(
       '<div class="xAxisDataPointText xAxisDataPointText-' + (i + 1) + '">' + data.rawDataKeys[i] + '</div>'
     );
-    $(".yAxisDataPointText-" + (i + 1)).css({
+    /* $(".yAxisDataPointText-" + (i + 1)).css({
       "transform": "translateY(-50%)",
       "margin-right": "5px"
-    });
+    }); */
   }
 }
 

@@ -15,8 +15,8 @@ export default function createChartElement(element) {
   $(".chartEditor").css({
     "display": "flex",
     "flex-direction": "column",
-    "justify-content": "center",
-    "border": "solid 1px lightgray",
-    "padding": "10px 5px"
+    "align-items": "flex-end",
+    "padding": "10px 5px",
+    "max-width": "150px"
   });
 }

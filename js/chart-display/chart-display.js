@@ -30,9 +30,8 @@ export default function createChartDisplay(chartTitle, axisTitles, element) {
 
   element.append('<div class="chartFooter"></div>');
   $(".chartFooter").css({
-    "text-align": "center"
+    "display":"flex",
+    "flex-direction": "column",
+    "align-items": "center"
   });
-  $(".chartFooter").append(
-    '<span>Bar Chart by <a href="https://github.com/patumang" target="_blank" >Umang Patel</a></span>'
-  );
 }

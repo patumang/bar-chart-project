@@ -105,7 +105,10 @@ export default function drawBarChart(data, options, element) {
   createChartBars(
     {
       "singleStack": singleStack,
+      "yAxisRange": yAxisRange,
       "rawDataValues": rawDataValues,
+      "rawDataStackKeys": rawDataStackKeys,
+      "rawDataStackValues": rawDataStackValues,
       "noOfColumns": noOfColumns,
       "heightOfEachRangePoint": barChartComponentsHeight.heightOfEachRangePoint,
       "widthOfEachBarInPerc": barChartComponentsWidth.widthOfEachBarInPerc
@@ -115,7 +118,18 @@ export default function drawBarChart(data, options, element) {
 
   createChartEditor($(".chartEditor"));
 
-  createEditorBodyElements(singleStack, barChartComponentsWidth, $(".editorBody"));
+  createEditorBodyElements(
+    {
+      "singleStack": singleStack,
+      "rawDataStackKeys": rawDataStackKeys,
+      "widthOfEachBarInPerc": barChartComponentsWidth.widthOfEachBarInPerc
+    },
+    $(".editorBody")
+  );
+
+  $(".chartFooter").append(
+    '<span>Bar Chart by <a href="https://github.com/patumang" target="_blank" >Umang Patel</a></span>'
+  );
 
   return true;
 }

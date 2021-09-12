@@ -1,10 +1,5 @@
 import rangeSlider from '../../slider-range.js';
 export default function createBarSpacingBody(singleStack, widthOfEachBarInPerc, element) {
-  element.css({
-    "display": "flex",
-    "padding": "10px 0px"
-  });
-
   element.append('<div class="sliderContainer" id="barSpacingSliderContainer"></div>');
 
   var currentBarSpacing;
