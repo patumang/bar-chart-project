@@ -1,3 +1,3 @@
-export default function createEditorBodyIndividualElement(elementDedails, parentElement) {
-  parentElement.append('<div class="editorBodyElement ' + elementDedails.class + '"></div>');
+export default function createEditorBodyIndividualElement(options, parentElement) {
+  parentElement.append('<div class="' + options.uniuqeChartId + '_editorBodyElement ' + options.class + '"></div>');
 }

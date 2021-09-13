@@ -5,8 +5,8 @@ export default function createColorBody(options, element) {
 
   if(options.singleStack !== undefined){
     if(options.singleStack === false) {
-      element.append('<ul class="barStackColorEditor"></ul>');
-      $('.barStackColorEditor').css({
+      element.append('<ul class="' + options.uniuqeChartId + '_barStackColorEditor"></ul>');
+      $("." + options.uniuqeChartId + "_barStackColorEditor").css({
         "display": "flex",
         "flex-wrap": "wrap",
         "justify-content": "space-evenly",
@@ -15,60 +15,60 @@ export default function createColorBody(options, element) {
       });
 
       for(let i = 0; i < options.rawDataStackKeys.length; i++) {
-        $('.barStackColorEditor').append(
-          '<li class="barStackColorEditorItem" id="barStackColorEditorItem-' + (i + 1) +'"></li>'
+        $("." + options.uniuqeChartId + "_barStackColorEditor").append(
+          '<li class="' + options.uniuqeChartId + '_barStackColorEditorItem" id="' + options.uniuqeChartId + '_barStackColorEditorItem-' + (i + 1) +'"></li>'
         );
 
-        $('#barStackColorEditorItem-' + (i + 1)).append(
-          '<a class="barStackColorEditorItemLink" id="barStackColorEditorItemLink-' + (i + 1) +'">' + options.rawDataStackKeys[i] + '</a>'
+        $("#" + options.uniuqeChartId + "_barStackColorEditorItem-" + (i + 1)).append(
+          '<a class="' + options.uniuqeChartId + '_barStackColorEditorItemLink" id="' + options.uniuqeChartId + '_barStackColorEditorItemLink-' + (i + 1) +'">' + options.rawDataStackKeys[i] + '</a>'
         );
 
       }
-      $('#barStackColorEditorItem-1').addClass("active");
-      $(".barStackColorEditor").on('click','li',function(){
-        $(".barStackColorEditor").find('li.active').removeClass("active");
+      $("#" + options.uniuqeChartId + "_barStackColorEditorItem-1").addClass("active");
+      $("." + options.uniuqeChartId + "_barStackColorEditor").on('click','li',function(){
+        $("." + options.uniuqeChartId + "_barStackColorEditor").find('li.active').removeClass("active");
         $(this).addClass("active");
-        $('.barStackColorEditorItem').css({
+        $("." + options.uniuqeChartId + "_barStackColorEditorItem").css({
           "background-color": "transparent",
           "border": "none"
         });
-        $('.barStackColorEditor li.active').css({
+        $("." + options.uniuqeChartId + "_barStackColorEditor li.active").css({
           "border": "solid .5px #ADE8F4",
           "border-radius": "5px",
           "background-color": "#EDFAFD"
         });
       });
 
-      $('.barStackColorEditorItem').css({
+      $("." + options.uniuqeChartId + "_barStackColorEditorItem").css({
         "list-style-type": "none",
         "padding": "3px"
       });
 
-      $('.barStackColorEditor li.active').css({
+      $("." + options.uniuqeChartId + "_barStackColorEditor li.active").css({
         "border": "solid .5px #ADE8F4",
         "border-radius": "5px",
         "background-color": "#EDFAFD"
       });
 
-      $('.barStackColorEditorItemLink').css({
+      $("." + options.uniuqeChartId + "_barStackColorEditorItemLink").css({
         "cursor": "pointer"
       });
     }
   }
 
-  element.append('<div class="colorPalette"></div>');
-  element.children('.colorPalette').css({
+  element.append('<div class="' + options.uniuqeChartId + '_colorPalette"></div>');
+  element.children("." + options.uniuqeChartId + "_colorPalette").css({
     "display": "flex",
     "flex-wrap": "wrap",
     "justify-content": "center"
   });
 
-  let inputTypeGeneralClass = options.inputType + "ColorPalette";
+  let inputTypeGeneralClass = options.uniuqeChartId + "_" + options.inputType + "ColorPalette";
 
   for(let currentColor of colorPalette) {
-    inputTypeClass = options.inputType + currentColor.name;
-    element.children('.colorPalette').append('<div class="' + inputTypeClass + ' ' + inputTypeGeneralClass + '"></div>');
-    $("." + inputTypeClass).css({
+    inputTypeClass = options.uniuqeChartId + "_" + options.inputType + currentColor.name;
+    element.children("." + options.uniuqeChartId + "_colorPalette").append('<div class="' + options.uniuqeChartId + '_' + inputTypeClass + ' ' + options.uniuqeChartId + '_' + inputTypeGeneralClass + '"></div>');
+    $("." + options.uniuqeChartId + "_" + inputTypeClass).css({
       "height": "30px",
       "width": "30px",
       "background-color": currentColor.dark,
@@ -79,50 +79,50 @@ export default function createColorBody(options, element) {
   }
 
   if(options.inputType === "titleColor") {
-    $("." + inputTypeGeneralClass).on("click", function () {
-      $(".chartHead").css("color", $(this).css("background-color"));
+    $("." + options.uniuqeChartId + "_" + inputTypeGeneralClass).on("click", function () {
+      $("." + options.uniuqeChartId + "_chartHead").css("color", $(this).css("background-color"));
     });
   }
   else if(options.inputType === "barColor") {
     let currentBarStack;
-    $("." + inputTypeGeneralClass).on("click", function () {
+    $("." + options.uniuqeChartId + "_" + inputTypeGeneralClass).on("click", function () {
       if(options.singleStack) {
-        $(".chartAreaBar").css({
+        $("." + options.uniuqeChartId + "_chartAreaBar").css({
           "background-color": $(this).css("background-color"),
           "color": $(this).css("color")
         });
       }
       else {
         currentBarStack = options.rawDataStackKeys.indexOf(
-          $(".barStackColorEditor").find('li.active').children("a").html()
+          $("." + options.uniuqeChartId + "_barStackColorEditor").find('li.active').children("a").html()
         )
-        $(".chartAreaBar-" + (currentBarStack + 1)).css({
+        $("." + options.uniuqeChartId + "_chartAreaBar-" + (currentBarStack + 1)).css({
           "background-color": $(this).css("background-color"),
           "color": $(this).css("color")
         });
-        $("#stackAliasItemColor-" + (currentBarStack + 1)).css({
+        $("#" + options.uniuqeChartId + "_stackAliasItemColor-" + (currentBarStack + 1)).css({
           "background-color": $(this).css("background-color")
         });
       }
     });
   }
   else if(options.inputType === "axisLabelColor") {
-    $("." + inputTypeGeneralClass).on("click", function () {
-      $(".yAxisTitleSpan").css("color", $(this).css("background-color"));
-      $(".xAxisTitleSpan").css("color", $(this).css("background-color"));
+    $("." + options.uniuqeChartId + "_"+ inputTypeGeneralClass).on("click", function () {
+      $("." + options.uniuqeChartId + "_yAxisTitleSpan").css("color", $(this).css("background-color"));
+      $("." + options.uniuqeChartId + "_xAxisTitleSpan").css("color", $(this).css("background-color"));
     });
   }
   else if(options.inputType === "dataPointColor") {
-    $("." + inputTypeGeneralClass).on("click", function () {
-      $(".yAxisDataPointMark").css("background-color", $(this).css("background-color"));
-      $(".yAxisDataPointContainer").css("color", $(this).css("background-color"));
-      $(".xAxisDataPointMark").css("background-color", $(this).css("background-color"));
-      $(".xAxisDataPointContainer").css("color", $(this).css("background-color"));
+    $("." + options.uniuqeChartId + "_" + inputTypeGeneralClass).on("click", function () {
+      $("." + options.uniuqeChartId + "_yAxisDataPointMark").css("background-color", $(this).css("background-color"));
+      $("." + options.uniuqeChartId + "_yAxisDataPointContainer").css("color", $(this).css("background-color"));
+      $("." + options.uniuqeChartId + "_xAxisDataPointMark").css("background-color", $(this).css("background-color"));
+      $("." + options.uniuqeChartId + "_xAxisDataPointContainer").css("color", $(this).css("background-color"));
     });
   }
   else if(options.inputType === "barLabelColor") {
-    $("." + inputTypeGeneralClass).on("click", function () {
-      $(".chartAreaBar").css("color", $(this).css("background-color"));
+    $("." + options.uniuqeChartId + "_" + inputTypeGeneralClass).on("click", function () {
+      $("." + options.uniuqeChartId + "_chartAreaBar").css("color", $(this).css("background-color"));
     });
   }
 

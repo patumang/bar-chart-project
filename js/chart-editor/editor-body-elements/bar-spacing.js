@@ -1,29 +1,34 @@
 import rangeSlider from '../../slider-range.js';
-export default function createBarSpacingBody(singleStack, widthOfEachBarInPerc, element) {
-  element.append('<div class="sliderContainer" id="barSpacingSliderContainer"></div>');
+export default function createBarSpacingBody(options, element) {
+  element.append('<div class="' + options.uniuqeChartId + '_sliderContainer" id="' + options.uniuqeChartId + '_barSpacingSliderContainer"></div>');
 
   var currentBarSpacing;
-  if (widthOfEachBarInPerc / 2 > 1)
-    currentBarSpacing = Math.floor(widthOfEachBarInPerc / 2);
+  if (options.widthOfEachBarInPerc / 2 > 1)
+    currentBarSpacing = Math.floor(options.widthOfEachBarInPerc / 2);
   else
-    currentBarSpacing = widthOfEachBarInPerc;
+    currentBarSpacing = options.widthOfEachBarInPerc;
 
-  $("#barSpacingSliderContainer").append(
-    '<input type="range" min="1" max="' + widthOfEachBarInPerc + '" value="' + currentBarSpacing + '" step="0.1" class="slider" id="barSpacingSlider">'
+  $("#" + options.uniuqeChartId + "_barSpacingSliderContainer").append(
+    '<input type="range" min="1" max="' + options.widthOfEachBarInPerc + '" value="' + currentBarSpacing + '" step="0.1" class="' + options.uniuqeChartId + '_slider" id="' + options.uniuqeChartId + '_barSpacingSlider">'
   );
 
-  var barSpacing= $('#barSpacingSlider').val();
-  if(singleStack){
-    $('.chartAreaBar').css("width", barSpacing + "%");
+  var barSpacing= $("#" + options.uniuqeChartId + "_barSpacingSlider").val();
+  if(options.singleStack){
+    $("." + options.uniuqeChartId + "_chartAreaBar").css("width", barSpacing + "%");
   }
   else {
-    $('.chartAreaBarColumn').css("width", barSpacing + "%");
+    $("." + options.uniuqeChartId + "_chartAreaBarColumn").css("width", barSpacing + "%");
   }
-  $('.xAxisDataPointContainer').css("width", barSpacing + "%");
+  $("." + options.uniuqeChartId + "_xAxisDataPointContainer").css("width", barSpacing + "%");
 
   rangeSlider(
-    {"modifier":"barSpacing", "singleStack": singleStack},
-    $('#barSpacingSlider'),
+    {
+      "uniuqeChartId": options.uniuqeChartId,
+      "modifier":"barSpacing",
+      "singleStack": options.singleStack
+    }
+    ,
+    $("#" + options.uniuqeChartId + "_barSpacingSlider"),
     undefined
   );
 }

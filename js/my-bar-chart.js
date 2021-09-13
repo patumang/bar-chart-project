@@ -1,3 +1,4 @@
+import setInitialCSS from './initial-css.js';
 import calculateYAxisRangeMin from './y-axis-range-min.js';
 import calculateYAxisRangeMax from './y-axis-range-max.js';
 import calculateYAxisRangeGap from './y-axis-range-gap.js';
@@ -15,8 +16,10 @@ import createChartEditor from './chart-editor/chart-editor.js';
 import createEditorBodyElements from './chart-editor/editor-body-elements/editor-body-elements.js';
 
 export default function drawBarChart(data, options, element) {
-
   const uniuqeChartId = Date.now();
+
+  setInitialCSS(uniuqeChartId);
+
   /* options.chartHeight > element.height() ? chartHeight = element.height() : chartHeight = options.chartHeight;
   options.chartWidth > element.width() ? chartWidth = element.width() : chartWidth = options.chartWidth; */
   options.chartHeight ? element.css("height", options.chartHeight) : element.css("min-height", "500px");
@@ -82,7 +85,12 @@ export default function drawBarChart(data, options, element) {
     yAxisRangeGap = calculateYAxisRangeGap(yAxisRange, noOfRows);
   }
 
-  createChartElement(uniuqeChartId, element);
+  createChartElement(
+    {
+      "uniuqeChartId": uniuqeChartId
+    },
+    element
+  );
 
   createChartDisplay(
     {
@@ -162,19 +170,21 @@ export default function drawBarChart(data, options, element) {
     $("." + uniuqeChartId + "_chartAreaContainer")
   );
 
-  /* createChartEditor($("." + uniuqeChartId + "_chartEditor"));
+  createChartEditor(
+    {
+      "uniuqeChartId": uniuqeChartId
+    },
+    $("." + uniuqeChartId + "_chartEditor")
+  );
 
   createEditorBodyElements(
     {
+      "uniuqeChartId": uniuqeChartId,
       "singleStack": singleStack,
       "rawDataStackKeys": rawDataStackKeys,
       "widthOfEachBarInPerc": barChartComponentsWidth.widthOfEachBarInPerc
     },
     $("." + uniuqeChartId + "_editorBody")
-  ); */
-
-  $("." + options.uniuqeChartId + "_chartFooter").append(
-    '<span>Bar Chart by <a href="https://github.com/patumang" target="_blank" >Umang Patel</a></span>'
   );
 
   return true;

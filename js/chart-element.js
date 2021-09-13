@@ -1,18 +1,18 @@
-export default function createChartElement(uniuqeChartId, element) {
+export default function createChartElement(options, element) {
   element.css({
     "display": "flex",
     "background-color": "transparent"
   });
 
-  element.append('<div class="' + uniuqeChartId + '_chartDisplay"></div>');
-  $("." + uniuqeChartId + "_chartDisplay").css({
+  element.append('<div class="' + options.uniuqeChartId + '_chartDisplay"></div>');
+  $("." + options.uniuqeChartId + "_chartDisplay").css({
     "flex": "1",
     "display": "flex",
     "flex-direction": "column"
   });
 
-  element.append('<div class="' + uniuqeChartId + '_chartEditor"></div>');
-  $("." + uniuqeChartId + "_chartEditor").css({
+  element.append('<div class="' + options.uniuqeChartId + '_chartEditor"></div>');
+  $("." + options.uniuqeChartId + "_chartEditor").css({
     "display": "flex",
     "flex-direction": "column",
     "align-items": "flex-end",

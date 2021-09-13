@@ -1,33 +1,33 @@
-export default function createBarValuePositionBody(element) {
-  element.css({
+export default function createBarValuePositionBody(options, element) {
+  /* element.css({
     "display": "flex",
     "flex-direction": "column",
     "align-items": "center",
     "font-size": "11px",
-  });
-  element.append('<div class="barValuePosition barValuePositionTop">Top</div>');
-  $(".barValuePositionTop").on("click", function () {
-    $(".chartAreaBar").css("align-items", "flex-start");
-  });
-
-  element.append('<div class="barValuePosition barValuePositionCenter">Center</div>');
-  $(".barValuePositionCenter").on("click", function () {
-    $(".chartAreaBar").css("align-items", "center");
+  }); */
+  element.append('<div class="' + options.uniuqeChartId + '_barValuePosition ' + options.uniuqeChartId + '_barValuePositionTop">Top</div>');
+  $("." + options.uniuqeChartId + "_barValuePositionTop").on("click", function () {
+    $("." + options.uniuqeChartId + "_chartAreaBar").css("align-items", "flex-start");
   });
 
-  element.append('<div class="barValuePosition barValuePositionBottom">Bottom</div>');
-  $(".barValuePositionBottom").on("click", function () {
-    $(".chartAreaBar").css("align-items", "flex-end");
+  element.append('<div class="' + options.uniuqeChartId + '_barValuePosition ' + options.uniuqeChartId + '_barValuePositionCenter">Center</div>');
+  $("." + options.uniuqeChartId + "_barValuePositionCenter").on("click", function () {
+    $("." + options.uniuqeChartId + "_chartAreaBar").css("align-items", "center");
   });
 
-  $(".barValuePosition").css({
+  element.append('<div class="' + options.uniuqeChartId + '_barValuePosition ' + options.uniuqeChartId + '_barValuePositionBottom">Bottom</div>');
+  $("." + options.uniuqeChartId + "_barValuePositionBottom").on("click", function () {
+    $("." + options.uniuqeChartId + "_chartAreaBar").css("align-items", "flex-end");
+  });
+
+  $("." + options.uniuqeChartId + "_barValuePosition").css({
     "font-size": "11px",
     "padding":"2px",
     /* "border-bottom": "solid 1px rgb(0, 60, 179)", */
     "cursor": "pointer"
   });
 
-  $(".barValuePosition").on("mouseover", function() {
+  $("." + options.uniuqeChartId + "_barValuePosition").on("mouseover", function() {
     $(this).css({
       "font-weight": "bold",
       "border": "solid .5px #ADE8F4",
@@ -35,7 +35,7 @@ export default function createBarValuePositionBody(element) {
       "background-color": "#EDFAFD"
     });
   });
-  $(".barValuePosition").on("mouseout", function() {
+  $("." + options.uniuqeChartId + "_barValuePosition").on("mouseout", function() {
     $(this).css({
       "font-weight": "normal",
       "background-color": "transparent",

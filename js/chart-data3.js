@@ -14,7 +14,7 @@ chartData["yAxisTitle"] = "Conception";
 chartData["yAxisRange"] = {"type": "number"};
 //chartData["yAxisRange"] = {"type": "number", "prefix": "", "postfix": ""};
 //chartData["yAxisRange"] = {"min": 0, "max": 12, "type": "number", "prefix": "", "postfix": ""};
-//chartData["yAxisRange"] = {"min": 0, "max": 12, "gap": 3, "type": "number", "prefix": "", "postfix": ""};
+chartData["yAxisRange"] = {"min": 0, "max": 12, "gap": 3, "type": "number", "prefix": "", "postfix": ""};
 
 chartOptions["chartHeight"] = 600;  //height in px
 chartOptions["chartWidth"] = 600;   //width in px

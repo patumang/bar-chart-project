@@ -1,9 +1,9 @@
-export default function createEditorBodyElementTitle(elementDedails, parentElement) {
+export default function createEditorBodyElementTitle(options, parentElement) {
   parentElement.append(
-    '<span class="editorBodyElementTitle ' + elementDedails.class + '">' + elementDedails.title + '</span>'
+    '<span class="' + options.uniuqeChartId + '_editorBodyElementTitle ' + options.class + '">' + options.title + '</span>'
   );
 
-  $(".editorBodyElementTitle").css({
+  $("." + options.uniuqeChartId + "_editorBodyElementTitle").css({
     "display": "block",
     "color": "gray",
     "font-size": "12px",
@@ -14,14 +14,14 @@ export default function createEditorBodyElementTitle(elementDedails, parentEleme
     "cursor": "pointer"
   });
 
-  $(".editorBodyElementTitle").on("mouseover", function() {
+  $("." + options.uniuqeChartId + "_editorBodyElementTitle").on("mouseover", function() {
     $(this).css({
       "color": "rgb(153, 38, 0)",
       "border-color": "rgb(153, 38, 0)",
       "font-weight": "bold"
     });
   });
-  $(".editorBodyElementTitle").on("mouseout", function() {
+  $("." + options.uniuqeChartId + "_editorBodyElementTitle").on("mouseout", function() {
     $(this).css({
       "color": "gray",
       "border-color": "lightgray",

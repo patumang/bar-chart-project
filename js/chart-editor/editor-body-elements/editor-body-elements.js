@@ -12,46 +12,99 @@ export default function createEditorBodyElements(options, element) {
 
   for(var editorBodyElement of editorBodyElements) {
     createEditorBodyIndividualElement(
-      {"class": editorBodyElement.className},
+      {
+        "uniuqeChartId": options.uniuqeChartId,
+        "class": options.uniuqeChartId + '_' + editorBodyElement.className
+      },
       element
     );
 
     createEditorBodyElementTitle(
       {
-        "class": editorBodyElement.titleClassName,
+        "uniuqeChartId": options.uniuqeChartId,
+        "class": options.uniuqeChartId + '_' + editorBodyElement.titleClassName,
         "title": editorBodyElement.title
       },
-      $("." + editorBodyElement.className)
+      $("." + options.uniuqeChartId + "_" + editorBodyElement.className)
     );
 
     createEditorBodyElementBody(
       {
-        "class": editorBodyElement.bodyClassName
+        "uniuqeChartId": options.uniuqeChartId,
+        "class": options.uniuqeChartId + '_' + editorBodyElement.bodyClassName
       },
-      $("." + editorBodyElement.className)
+      $("." + options.uniuqeChartId + "_" + editorBodyElement.className)
     );
   }
-  createBarValuePositionBody($(".barValuePositionBody"));
-  createChartTitleBody($(".chartTitleBody"));
-  createTitleFontSizeBody($(".titleFontSizeBody"));
-  createColorBody({"inputType": "titleColor"}, $(".titleColorBody"));
+
+  createBarValuePositionBody(
+    {
+      "uniuqeChartId": options.uniuqeChartId
+    },
+    $("." + options.uniuqeChartId + "_barValuePositionBody")
+  );
+  createChartTitleBody(
+    {
+      "uniuqeChartId": options.uniuqeChartId
+    },
+    $("." + options.uniuqeChartId + "_chartTitleBody")
+  );
+  createTitleFontSizeBody(
+    {
+      "uniuqeChartId": options.uniuqeChartId
+    },
+    $("." + options.uniuqeChartId + "_titleFontSizeBody")
+  );
   createColorBody(
     {
+      "uniuqeChartId": options.uniuqeChartId,
+      "inputType": "titleColor"
+    },
+    $("." + options.uniuqeChartId + "_titleColorBody")
+  );
+  createColorBody(
+    {
+      "uniuqeChartId": options.uniuqeChartId,
       "inputType": "barColor",
       "singleStack": options.singleStack,
       "rawDataStackKeys": options.rawDataStackKeys
     },
-    $(".barColorBody")
+    $("." + options.uniuqeChartId + "_barColorBody")
   );
-  createColorBody({"inputType": "axisLabelColor"}, $(".axisLabelColorBody"));
-  createColorBody({"inputType": "dataPointColor"}, $(".dataPointColorBody"));
-  createColorBody({"inputType": "barLabelColor"}, $(".barLabelColorBody"));
-  createBarSpacingBody(options.singleStack, options.widthOfEachBarInPerc, $(".barSpacingBody"));
+  createColorBody(
+    {
+      "uniuqeChartId": options.uniuqeChartId,
+      "inputType": "axisLabelColor"
+    },
+    $("." + options.uniuqeChartId + "_axisLabelColorBody")
+  );
+  createColorBody(
+    {
+      "uniuqeChartId": options.uniuqeChartId,
+      "inputType": "dataPointColor"
+    },
+    $("." + options.uniuqeChartId + "_dataPointColorBody")
+  );
+  createColorBody(
+    {
+      "uniuqeChartId": options.uniuqeChartId,
+      "inputType": "barLabelColor"
+    },
+    $("." + options.uniuqeChartId + "_barLabelColorBody")
+  );
+  createBarSpacingBody(
+    {
+      "uniuqeChartId": options.uniuqeChartId,
+      "singleStack": options.singleStack,
+      "widthOfEachBarInPerc": options.widthOfEachBarInPerc
+    },
+    $("." + options.uniuqeChartId + "_barSpacingBody")
+  );
 
-  $(".editorBodyElementBody").hide();
+  $("." + options.uniuqeChartId + "_editorBodyElementBody").hide();
 
-  $(".editorBodyElementTitle").on("click", function () {
-    $(".editorBodyElementBody").hide();
-    $(this).next('.editorBodyElementBody').show();
+  $("." + options.uniuqeChartId + "_editorBodyElementTitle").on("click", function () {
+    $("." + options.uniuqeChartId + "_editorBodyElementBody").hide();
+    $(this).next("." + options.uniuqeChartId + "_editorBodyElementBody").show();
   });
 }

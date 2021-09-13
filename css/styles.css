@@ -36,16 +36,3 @@ body {
   border: solid .5px lightgray;
   margin-bottom: 20px;
 }
-
-.sliderContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 11px;
-  color: rgb(0, 60, 179)
-}
-
-.slider {
-  width: 100%;
-}

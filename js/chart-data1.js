@@ -11,7 +11,7 @@ chartData["chartRawData"] = {
 chartData["chartTitle"] = "Favorite Type of Movie";
 chartData["xAxisTitle"] = "Movies";
 chartData["yAxisTitle"] = "People";
-chartData["yAxisRange"] = {"min": 0, "max": 10, "type": "number", "prefix": "", "postfix": ""};
+chartData["yAxisRange"] = {"min": 0, "max": 8, "gap": 1, "type": "number", "prefix": "", "postfix": ""};
 
 chartOptions["chartHeight"] = 600;  //height in px
 chartOptions["chartWidth"] = 600;   //width in px

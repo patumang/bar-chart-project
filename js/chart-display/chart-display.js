@@ -34,7 +34,11 @@ export default function createChartDisplay(options, element) {
   element.append('<div class="' + options.uniuqeChartId + '_chartFooter"></div>');
   $("." + options.uniuqeChartId + "_chartFooter").css({
     "display":"flex",
-    "flex-direction": "column",
+    "flex-direction": "column-reverse",
     "align-items": "center"
   });
+
+  $("." + options.uniuqeChartId + "_chartFooter").append(
+    '<span>Bar Chart by <a href="https://github.com/patumang" target="_blank" >Umang Patel</a></span>'
+  );
 }
