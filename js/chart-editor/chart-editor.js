@@ -7,7 +7,7 @@ export default function createChartEditor(options, element) {
   });
 
   $("." + options.uniuqeChartId + "_editorToggle").append(
-    '<img class="' + options.uniuqeChartId + '_menu-icon" src="../../img/menu-icon.png" />'
+    '<img class="' + options.uniuqeChartId + '_menu-icon" src="/img/menu-icon.png" />'
   );
   $("." + options.uniuqeChartId + "_menu-icon").css({
     "display": "block",
@@ -15,7 +15,7 @@ export default function createChartEditor(options, element) {
     "width": "25px"
   });
   $("." + options.uniuqeChartId + "_editorToggle").append(
-    '<img class="' + options.uniuqeChartId + '_close-icon" src="../../img/close-icon.png" />'
+    '<img class="' + options.uniuqeChartId + '_close-icon" src="/img/close-icon.png" />'
   );
   $("." + options.uniuqeChartId + "_close-icon").css({
     "display": "none",
