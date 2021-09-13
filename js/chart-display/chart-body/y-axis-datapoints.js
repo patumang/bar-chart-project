@@ -31,6 +31,5 @@ export default function createYAxisDataPointsContainer(noOfRows, yAxisRangeGap, 
     });
 
     currentMark += yAxisRangeGap;
-    console.log(currentMark);
   }
 }

@@ -86,7 +86,6 @@ export default function createColorBody(options, element) {
   else if(options.inputType === "barColor") {
     let currentBarStack;
     $("." + inputTypeGeneralClass).on("click", function () {
-      console.log(options.singleStack);
       if(options.singleStack) {
         $(".chartAreaBar").css({
           "background-color": $(this).css("background-color"),

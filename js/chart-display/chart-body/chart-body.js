@@ -1,7 +1,7 @@
-export default function createChartBody(axisTitles, element) {
-  if(axisTitles.yAxisTitle) {
-    element.append('<div class="yAxisTitleContainer"></div>');
-    $(".yAxisTitleContainer").css({
+export default function createChartBody(options, element) {
+  if(options.yAxisTitle) {
+    element.append('<div class="' + options.uniuqeChartId + '_yAxisTitleContainer"></div>');
+    $("." + options.uniuqeChartId + "_yAxisTitleContainer").css({
       "grid-column": "yAxisTitle-start / yAxisTitle-end",
       "grid-row": "chartAreaRow-start / chartAreaRow-end",
       "display": "flex",
@@ -11,24 +11,24 @@ export default function createChartBody(axisTitles, element) {
     });
   }
 
-  element.append('<div class="yAxisContainer"></div>');
-  $(".yAxisContainer").css({
+  element.append('<div class="' + options.uniuqeChartId + '_yAxisContainer"></div>');
+  $("." + options.uniuqeChartId + "_yAxisContainer").css({
     "grid-column": "yAxis-start / yAxis-end",
     "grid-row": "chartAreaRow-start / chartAreaRow-end",
     "display": "flex",
     "flex-direction": "column-reverse"
   });
 
-  element.append('<div class="yAxisRuler"><div>');
-  $(".yAxisRuler").css({
+  element.append('<div class="' + options.uniuqeChartId + '_yAxisRuler"><div>');
+  $("." + options.uniuqeChartId + "_yAxisRuler").css({
     "grid-column": "yAxisRuler-start / yAxisRuler-end",
     "grid-row": "chartAreaRow-start / chartAreaRow-end",
     "background-color": "gray",
     "width": "1px"
   });
 
-  element.append('<div class="chartAreaContainer"></div>');
-  $(".chartAreaContainer").css({
+  element.append('<div class="' + options.uniuqeChartId + '_chartAreaContainer"></div>');
+  $("." + options.uniuqeChartId + "_chartAreaContainer").css({
     "grid-column": "chartAreaColumn-start / chartAreaColumn-end",
     "grid-row": "chartAreaRow-start / chartAreaRow-end",
     "display": "flex",
@@ -36,8 +36,8 @@ export default function createChartBody(axisTitles, element) {
     "align-items": "flex-end"
   });
 
-  element.append('<div class="xAxisRuler"></div>');
-  $(".xAxisRuler").css({
+  element.append('<div class="' + options.uniuqeChartId + '_xAxisRuler"></div>');
+  $("." + options.uniuqeChartId + "_xAxisRuler").css({
     "grid-column": "chartAreaColumn-start / chartAreaColumn-end",
     "grid-row": "xAxisRuler-start / xAxisRuler-end",
     "background-color": "gray",
@@ -45,17 +45,17 @@ export default function createChartBody(axisTitles, element) {
     "margin-left": "-1px"
   });
 
-  element.append('<div class="xAxisContainer"></div>');
-  $(".xAxisContainer").css({
+  element.append('<div class="' + options.uniuqeChartId + '_xAxisContainer"></div>');
+  $("." + options.uniuqeChartId + "_xAxisContainer").css({
     "grid-column": "chartAreaColumn-start / chartAreaColumn-end",
     "grid-row": "xAxis-start / xAxis-end",
     "display": "flex",
     "justify-content": "space-evenly"
   });
 
-  if(axisTitles.xAxisTitle) {
-    element.append('<div class="xAxisTitleContainer"></div>');
-    $(".xAxisTitleContainer").css({
+  if(options.xAxisTitle) {
+    element.append('<div class="' + options.uniuqeChartId + '_xAxisTitleContainer"></div>');
+    $("." + options.uniuqeChartId + "_xAxisTitleContainer").css({
       "grid-column": "chartAreaColumn-start / chartAreaColumn-end",
       "grid-row": "xAxisTitle-start / xAxisTitle-end",
       "display": "flex",

@@ -1,32 +1,28 @@
-export default function createXAxisDataPointsContainer(data, element) {
+export default function createXAxisDataPointsContainer(options, element) {
 
-  for(let i = 0; i < data.noOfColumns; i++) {
+  for(let i = 0; i < options.noOfColumns; i++) {
     element.append(
-      '<div class="xAxisDataPointContainer xAxisDataPointContainer-' + (i + 1) + '"></div>'
+      '<div class="' + options.uniuqeChartId + '_xAxisDataPointContainer ' + options.uniuqeChartId + '_xAxisDataPointContainer-' + (i + 1) + '"></div>'
     );
-    $(".xAxisDataPointContainer-" + (i + 1)).css({
-      "width": data.widthOfEachBarInPerc + "%",
+    $("." + options.uniuqeChartId + "_xAxisDataPointContainer-" + (i + 1)).css({
+      "width": options.widthOfEachBarInPerc + "%",
       "display": "flex",
       "flex-direction": "column",
       "align-items": "center"
     });
 
-    $(".xAxisDataPointContainer-" + (i + 1)).append(
-      '<div class="xAxisDataPointMark xAxisDataPointMark-' + (i + 1) + '"></div>'
+    $("." + options.uniuqeChartId + "_xAxisDataPointContainer-" + (i + 1)).append(
+      '<div class="' + options.uniuqeChartId + '_xAxisDataPointMark ' + options.uniuqeChartId + '_xAxisDataPointMark-' + (i + 1) + '"></div>'
     );
-    $(".xAxisDataPointMark-" + (i + 1)).css({
+    $("." + options.uniuqeChartId + "_xAxisDataPointMark-" + (i + 1)).css({
       "height": "5px",
       "width": "1px",
       "background-color": "gray"
     });
 
-    $(".xAxisDataPointContainer-" + (i + 1)).append(
-      '<div class="xAxisDataPointText xAxisDataPointText-' + (i + 1) + '">' + data.rawDataKeys[i] + '</div>'
+    $("." + options.uniuqeChartId + "_xAxisDataPointContainer-" + (i + 1)).append(
+      '<div class="' + options.uniuqeChartId + '_xAxisDataPointText ' + options.uniuqeChartId + '_xAxisDataPointText-' + (i + 1) + '">' + options.rawDataKeys[i] + '</div>'
     );
-    /* $(".yAxisDataPointText-" + (i + 1)).css({
-      "transform": "translateY(-50%)",
-      "margin-right": "5px"
-    }); */
   }
 }
 
@@ -52,6 +48,11 @@ export default function createXAxisDataPointsContainer(data, element) {
     $(".xAxisDataPointContainer-" + (i + 1)).append(
       '<div class="xAxisDataPointText">' + chartRawData[i][keys[0]] + '</div>'
     );
+
+    // $(".yAxisDataPointText-" + (i + 1)).css({
+    //   "transform": "translateY(-50%)",
+    //   "margin-right": "5px"
+    // });
 
     if(dataPointsOptions.noOfColumns > 6 && dataPointsOptions.noOfColumns <= 15){
       console.log(Math.pow((chartRawData[i][keys[0]]).length, 2));
