@@ -1,11 +1,11 @@
-export default function createYAxisDataPointsContainer(noOfRows, yAxisRangeGap, element) {
-  var currentMark = yAxisRangeGap;
+export default function createYAxisDataPointsContainer(options, element) {
+  var currentMark = options.yAxisRangeGap;
 
-  for(var i = 0; i < noOfRows; i++) {
+  for(var i = 0; i < options.noOfRows; i++) {
     element.append(
-      '<div class="yAxisDataPointContainer yAxisDataPointContainer-' + (i + 1) + '"></div>'
+      '<div class="' + options.uniuqeChartId + '_yAxisDataPointContainer ' + options.uniuqeChartId + '_yAxisDataPointContainer-' + (i + 1) + '"></div>'
     );
-    $(".yAxisDataPointContainer-" + (i + 1)).css({
+    $("." + options.uniuqeChartId + "_yAxisDataPointContainer-" + (i + 1)).css({
       "flex": "1",
       /* "height": barChartComponentsHeight.chartAreaRowMarkHeight + "px", */
       "display": "flex",
@@ -13,23 +13,23 @@ export default function createYAxisDataPointsContainer(noOfRows, yAxisRangeGap, 
       "align-items": "flex-start"
     });
 
-    $(".yAxisDataPointContainer-" + (i + 1)).append(
-      '<div class="yAxisDataPointText yAxisDataPointText-' + (i + 1) + '">' + currentMark.toFixed(1) + '</div>'
+    $("." + options.uniuqeChartId + "_yAxisDataPointContainer-" + (i + 1)).append(
+      '<div class="' + options.uniuqeChartId + '_yAxisDataPointText ' + options.uniuqeChartId + '_yAxisDataPointText-' + (i + 1) + '">' + currentMark.toFixed(1) + '</div>'
     );
-    $(".yAxisDataPointText-" + (i + 1)).css({
+    $("." + options.uniuqeChartId + "_yAxisDataPointText-" + (i + 1)).css({
       "transform": "translateY(-50%)",
       "margin-right": "5px"
     });
 
-    $(".yAxisDataPointContainer-" + (i + 1)).append(
-      '<div class="yAxisDataPointMark yAxisDataPointMark-' + (i + 1) + '"></div>'
+    $("." + options.uniuqeChartId + "_yAxisDataPointContainer-" + (i + 1)).append(
+      '<div class="' + options.uniuqeChartId + '_yAxisDataPointMark ' + options.uniuqeChartId + '_yAxisDataPointMark-' + (i + 1) + '"></div>'
     );
-    $(".yAxisDataPointMark-" + (i + 1)).css({
+    $("." + options.uniuqeChartId + "_yAxisDataPointMark-" + (i + 1)).css({
       "height": "1px",
       "width": "5px",
       "background-color": "gray"
     });
 
-    currentMark += yAxisRangeGap;
+    currentMark += options.yAxisRangeGap;
   }
 }

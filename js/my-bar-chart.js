@@ -138,10 +138,18 @@ export default function drawBarChart(data, options, element) {
     $("." + uniuqeChartId + "_xAxisContainer")
   );
 
-  /* createYAxisDataPointsContainer(noOfRows, yAxisRangeGap, $("." + uniuqeChartId + "_yAxisContainer"));
+  createYAxisDataPointsContainer(
+    {
+      "uniuqeChartId": uniuqeChartId,
+      "noOfRows": noOfRows,
+      "yAxisRangeGap": yAxisRangeGap
+    },
+    $("." + uniuqeChartId + "_yAxisContainer")
+  );
 
   createChartBars(
     {
+      "uniuqeChartId": uniuqeChartId,
       "singleStack": singleStack,
       "yAxisRange": yAxisRange,
       "yAxisRangeGap": yAxisRangeGap,
@@ -154,7 +162,7 @@ export default function drawBarChart(data, options, element) {
     $("." + uniuqeChartId + "_chartAreaContainer")
   );
 
-  createChartEditor($("." + uniuqeChartId + "_chartEditor"));
+  /* createChartEditor($("." + uniuqeChartId + "_chartEditor"));
 
   createEditorBodyElements(
     {

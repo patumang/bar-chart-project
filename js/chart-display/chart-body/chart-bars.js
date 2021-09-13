@@ -1,20 +1,20 @@
 import colorPalette from '../../color-palette.js';
 import calculateWidthOfBarChartComponents from '../../bar-area-width.js';
 
-export default function createChartBars(data, element) {
+export default function createChartBars(options, element) {
   let heightOfCurrentBar;
 
   let barChartComponentsWidth = calculateWidthOfBarChartComponents(
-    data.noOfColumns, $(".chartAreaContainer")
+    options.noOfColumns, $("." + options.uniuqeChartId + "_chartAreaContainer")
   );
 
-  if(data.singleStack) {
-    for(let i = 0; i < data.noOfColumns; i++) {
-      heightOfCurrentBar = (data.rawDataValues[i] * 100) / (data.yAxisRangeGap * data.noOfRows);
+  if(options.singleStack) {
+    for(let i = 0; i < options.noOfColumns; i++) {
+      heightOfCurrentBar = (options.rawDataValues[i] * 100) / (options.yAxisRangeGap * options.noOfRows);
       element.append(
-        '<div class="chartAreaBar chartAreaBar-' + (i + 1) + '"><span>' + data.rawDataValues[i] + '<span></div>'
+        '<div class="' + options.uniuqeChartId + '_chartAreaBar ' + options.uniuqeChartId + '_chartAreaBar-' + (i + 1) + '"><span>' + options.rawDataValues[i] + '<span></div>'
       );
-      $(".chartAreaBar-" + (i + 1)).css({
+      $("." + options.uniuqeChartId + "_chartAreaBar-" + (i + 1)).css({
         "height": heightOfCurrentBar + "%",
         "width": barChartComponentsWidth.widthOfEachBarInPerc + "%",
         "background-color": colorPalette[0]["dark"],
@@ -26,65 +26,65 @@ export default function createChartBars(data, element) {
   }
   else {
 
-    $(".chartFooter").append(
-      '<div class="stackAlias"></div>'
+    $("." + options.uniuqeChartId + "_chartFooter").append(
+      '<div class="' + options.uniuqeChartId + '_stackAlias"></div>'
     );
-    $('.stackAlias').css({
+    $("." + options.uniuqeChartId + "_stackAlias").css({
       "display": "flex",
       "flex-wrap": "wrap",
       "justify-content": "center",
       "margin": "5px 0"
     });
 
-    for(let i = 0; i < data.rawDataStackKeys.length; i++) {
-      $('.stackAlias').append(
-        '<div class="stackAliasItem" id="stackAliasItem-' + ( i + 1) + '"></div>'
+    for(let i = 0; i < options.rawDataStackKeys.length; i++) {
+      $("." + options.uniuqeChartId + "_stackAlias").append(
+        '<div class="' + options.uniuqeChartId + '_stackAliasItem" id="' + options.uniuqeChartId + '_stackAliasItem-' + ( i + 1) + '"></div>'
       );
-      $('.stackAliasItem').css({
+      $("." + options.uniuqeChartId + "_stackAliasItem").css({
         "display": "flex",
         "justify-content": "center",
         "align-items": "center",
         "padding": "0 5px"
       });
-      $('#stackAliasItem-' + ( i + 1)).append(
-        '<div class="stackAliasItemColor" id="stackAliasItemColor-' + ( i + 1) + '"></div>'
+      $("#" + options.uniuqeChartId + "_stackAliasItem-" + ( i + 1)).append(
+        '<div class="' + options.uniuqeChartId + '_stackAliasItemColor" id="' + options.uniuqeChartId + '_stackAliasItemColor-' + ( i + 1) + '"></div>'
       );
-      $('#stackAliasItemColor-' + ( i + 1)).css({
+      $("#" + options.uniuqeChartId + "_stackAliasItemColor-" + ( i + 1)).css({
         "height": "15px",
         "width": "15px",
         "margin-right": "5px",
         "background-color": colorPalette[i]["dark"]
       });
-      $('#stackAliasItem-' + ( i + 1)).append(
-        '<div class="stackAliasItemText" id="stackAliasItemText-"' + ( i + 1) + '>' + data.rawDataStackKeys[i] + '</div>'
+      $("#" + options.uniuqeChartId + "_stackAliasItem-" + ( i + 1)).append(
+        '<div class="' + options.uniuqeChartId + '_stackAliasItemText" id="' + options.uniuqeChartId + '_stackAliasItemText-"' + ( i + 1) + '>' + options.rawDataStackKeys[i] + '</div>'
       );
     }
 
-    for(let i = 0; i < data.noOfColumns; i++) {
+    for(let i = 0; i < options.noOfColumns; i++) {
       element.append(
-        '<div class="chartAreaBarColumn chartAreaBarColumn-' + (i + 1) + '"></div>'
+        '<div class="' + options.uniuqeChartId + '_chartAreaBarColumn ' + options.uniuqeChartId + '_chartAreaBarColumn-' + (i + 1) + '"></div>'
       );
-      $(".chartAreaBarColumn-" + (i + 1)).css({
+      $("." + options.uniuqeChartId + "_chartAreaBarColumn-" + (i + 1)).css({
         "height": "100%",
         "width": barChartComponentsWidth.widthOfEachBarInPerc + "%",
         "display": "flex",
         "flex-direction": "column-reverse",
         "justify-content": "flex-start"
       });
-      for(let j = 0; j < data.rawDataStackValues[i].length; j++) {
-        heightOfCurrentBar = (data.rawDataStackValues[i][j] * 100) / (data.yAxisRangeGap * data.noOfRows);
-        $(".chartAreaBarColumn-" + (i + 1)).append(
-          '<div class="chartAreaBar chartAreaBar-' + (j + 1) + ' chartAreaBar-' + (i + 1) + '-' + (j + 1) + '"><span>' + data.rawDataStackValues[i][j] + '<span></div>'
+      for(let j = 0; j < options.rawDataStackValues[i].length; j++) {
+        heightOfCurrentBar = (options.rawDataStackValues[i][j] * 100) / (options.yAxisRangeGap * options.noOfRows);
+        $("." + options.uniuqeChartId + "_chartAreaBarColumn-" + (i + 1)).append(
+          '<div class="' + options.uniuqeChartId + '_chartAreaBar ' + options.uniuqeChartId + '_chartAreaBar-' + (j + 1) + ' ' + options.uniuqeChartId + '_chartAreaBar-' + (i + 1) + '-' + (j + 1) + '"><span>' + options.rawDataStackValues[i][j] + '<span></div>'
         );
 
-        $(".chartAreaBar-" + (i + 1) + "-" + (j + 1)).css({
+        $("." + options.uniuqeChartId + "_chartAreaBar-" + (i + 1) + "-" + (j + 1)).css({
           "height": heightOfCurrentBar + "%",
           "width": "100%",
           "display": "flex",
           "justify-content": "center"
         });
 
-        $(".chartAreaBar-" + (j + 1)).css({
+        $("." + options.uniuqeChartId + "_chartAreaBar-" + (j + 1)).css({
           "background-color": colorPalette[j]["dark"],
           "color": colorPalette[j]["fontColor"]
         });

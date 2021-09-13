@@ -1,7 +1,6 @@
 import colorPalette from '../../color-palette.js';
 
 export default function createYAxisTitleContainer(options, element) {
-  console.log(options.yAxisTitle);
   element.append('<span class="' + options.uniuqeChartId + '_yAxisTitleSpan">' + options.yAxisTitle + '<span>');
   $("." + options.uniuqeChartId + "_yAxisTitleSpan").css({
     "display": "block",
