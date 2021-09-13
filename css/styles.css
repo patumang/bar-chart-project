@@ -31,6 +31,7 @@ body {
   width: 650px;
   height: 650px;
   background-color: rgb(247, 246, 241);
+  border: solid .5px lightgray;
 }
 
 .sliderContainer {

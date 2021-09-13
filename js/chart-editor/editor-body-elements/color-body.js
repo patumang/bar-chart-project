@@ -30,7 +30,6 @@ export default function createColorBody(options, element) {
         $(this).addClass("active");
         $('.barStackColorEditorItem').css({
           "background-color": "transparent",
-          "color": "#777",
           "border": "none"
         });
         $('.barStackColorEditor li.active').css({
@@ -87,24 +86,23 @@ export default function createColorBody(options, element) {
   else if(options.inputType === "barColor") {
     let currentBarStack;
     $("." + inputTypeGeneralClass).on("click", function () {
-      currentBarStack = options.rawDataStackKeys.indexOf(
-        $(".barStackColorEditor").find('li.active').children("a").html()
-      )
-      if(options.singleStack !== undefined){
-        if(options.singleStack === false) {
-          $(".chartAreaBar-" + (currentBarStack + 1)).css({
-            "background-color": $(this).css("background-color"),
-            "color": $(this).css("color")
-          });
-          $("#stackAliasItemColor-" + (currentBarStack + 1)).css({
-            "background-color": $(this).css("background-color")
-          });
-        }
-      }
-      else{
+      console.log(options.singleStack);
+      if(options.singleStack) {
         $(".chartAreaBar").css({
           "background-color": $(this).css("background-color"),
           "color": $(this).css("color")
+        });
+      }
+      else {
+        currentBarStack = options.rawDataStackKeys.indexOf(
+          $(".barStackColorEditor").find('li.active').children("a").html()
+        )
+        $(".chartAreaBar-" + (currentBarStack + 1)).css({
+          "background-color": $(this).css("background-color"),
+          "color": $(this).css("color")
+        });
+        $("#stackAliasItemColor-" + (currentBarStack + 1)).css({
+          "background-color": $(this).css("background-color")
         });
       }
     });

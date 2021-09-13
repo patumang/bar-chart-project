@@ -1,12 +1,15 @@
-export default function createChartBody(element) {
-  element.append('<div class="yAxisTitleContainer"></div>');
-  $(".yAxisTitleContainer").css({
-    "grid-column": "yAxisTitle-start / yAxisTitle-end",
-    "grid-row": "chartAreaRow-start / chartAreaRow-end",
-    "display": "flex",
-    "justify-content": "center",
-    "align-items": "center"
-  });
+export default function createChartBody(axisTitles, element) {
+  if(axisTitles.yAxisTitle) {
+    element.append('<div class="yAxisTitleContainer"></div>');
+    $(".yAxisTitleContainer").css({
+      "grid-column": "yAxisTitle-start / yAxisTitle-end",
+      "grid-row": "chartAreaRow-start / chartAreaRow-end",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "width": "40px"
+    });
+  }
 
   element.append('<div class="yAxisContainer"></div>');
   $(".yAxisContainer").css({
@@ -50,12 +53,14 @@ export default function createChartBody(element) {
     "justify-content": "space-evenly"
   });
 
-  element.append('<div class="xAxisTitleContainer"></div>');
-  $(".xAxisTitleContainer").css({
-    "grid-column": "chartAreaColumn-start / chartAreaColumn-end",
-    "grid-row": "xAxisTitle-start / xAxisTitle-end",
-    "display": "flex",
-    "justify-content": "center",
-    "align-items": "center"
-  });
+  if(axisTitles.xAxisTitle) {
+    element.append('<div class="xAxisTitleContainer"></div>');
+    $(".xAxisTitleContainer").css({
+      "grid-column": "chartAreaColumn-start / chartAreaColumn-end",
+      "grid-row": "xAxisTitle-start / xAxisTitle-end",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    });
+  }
 }

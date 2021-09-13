@@ -1,5 +1,6 @@
 import calculateYAxisRangeMin from './y-axis-range-min.js';
 import calculateYAxisRangeMax from './y-axis-range-max.js';
+import calculateYAxisRangeGap from './y-axis-range-gap.js';
 import createChartElement from './chart-element.js';
 import createChartDisplay from './chart-display/chart-display.js';
 import createChartBody from './chart-display/chart-body/chart-body.js';
@@ -14,10 +15,11 @@ import createChartEditor from './chart-editor/chart-editor.js';
 import createEditorBodyElements from './chart-editor/editor-body-elements/editor-body-elements.js';
 
 export default function drawBarChart(data, options, element) {
-  let chartHeight, chartWidth;
 
-  options.chartHeight > element.height() ? chartHeight = element.height() : chartHeight = options.chartHeight;
-  options.chartWidth > element.width() ? chartWidth = element.width() : chartWidth = options.chartWidth;
+  /* options.chartHeight > element.height() ? chartHeight = element.height() : chartHeight = options.chartHeight;
+  options.chartWidth > element.width() ? chartWidth = element.width() : chartWidth = options.chartWidth; */
+  options.chartHeight ? element.css("height", options.chartHeight) : element.css("min-height", "500px");
+  options.chartWidth ? element.css("width", options.chartWidth) : element.css("min-width", "500px");
 
   const rawDataKeys = Object.keys(data["chartRawData"]);
   const rawDataValues = Object.values(data["chartRawData"]);
@@ -25,7 +27,7 @@ export default function drawBarChart(data, options, element) {
   let rawDataStackValues = [];
 
   const noOfColumns = rawDataKeys.length;
-  let noOfRows = 10;
+  let noOfRows;
 
   const singleStack =  typeof rawDataValues[0] !== "object" ? true : false;
 
@@ -38,8 +40,14 @@ export default function drawBarChart(data, options, element) {
   }
 
   let yAxisRange = [];
+  let yAxisRangeGap;
 
   if(data.yAxisRange) {
+    if(data.yAxisRange.min >= 0 && data.yAxisRange.max >= 0 && data.yAxisRange.gap >= 0)
+      noOfRows = Math.ceil((data.yAxisRange.max - data.yAxisRange.min) / data.yAxisRange.gap);
+    else
+      noOfRows = 10;
+
     if(data.yAxisRange.min)
       yAxisRange[0] = data.yAxisRange.min;
     else
@@ -54,14 +62,23 @@ export default function drawBarChart(data, options, element) {
         noOfRows
       );
     }
+
+    if(data.yAxisRange.gap) {
+      yAxisRangeGap = data.yAxisRange.gap;
+    }
+    else{
+      yAxisRangeGap = calculateYAxisRangeGap(yAxisRange, noOfRows);
+    }
   }
   else {
+    noOfRows = 10;
     yAxisRange[0] = calculateYAxisRangeMin();
     yAxisRange[1] = calculateYAxisRangeMax(
       singleStack,
       {"rawDataValues": rawDataValues, "rawDataStackValues": rawDataStackValues},
       noOfRows
     );
+    yAxisRangeGap = calculateYAxisRangeGap(yAxisRange, noOfRows);
   }
 
   createChartElement(element);
@@ -75,7 +92,13 @@ export default function drawBarChart(data, options, element) {
     $(".chartDisplay")
   );
 
-  createChartBody($(".chartBody"));
+  createChartBody(
+    {
+      "yAxisTitle": data.yAxisTitle,
+      "xAxisTitle": data.xAxisTitle
+    },
+    $(".chartBody")
+  );
 
   if(data.yAxisTitle)
     createYAxisTitleContainer(data.yAxisTitle, $(".yAxisTitleContainer"));
@@ -90,9 +113,6 @@ export default function drawBarChart(data, options, element) {
     noOfColumns, $(".chartAreaContainer")
   );
 
-  createYAxisDataPointsContainer(noOfRows, barChartComponentsHeight, $(".yAxisContainer"));
-
-
   createXAxisDataPointsContainer(
     {
       "rawDataKeys": rawDataKeys,
@@ -102,16 +122,18 @@ export default function drawBarChart(data, options, element) {
     $(".xAxisContainer")
   );
 
+  createYAxisDataPointsContainer(noOfRows, yAxisRangeGap, $(".yAxisContainer"));
+
   createChartBars(
     {
       "singleStack": singleStack,
       "yAxisRange": yAxisRange,
+      "yAxisRangeGap": yAxisRangeGap,
       "rawDataValues": rawDataValues,
       "rawDataStackKeys": rawDataStackKeys,
       "rawDataStackValues": rawDataStackValues,
       "noOfColumns": noOfColumns,
-      "heightOfEachRangePoint": barChartComponentsHeight.heightOfEachRangePoint,
-      "widthOfEachBarInPerc": barChartComponentsWidth.widthOfEachBarInPerc
+      "noOfRows": noOfRows
     },
     $(".chartAreaContainer")
   );

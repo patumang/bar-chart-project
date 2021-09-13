@@ -24,7 +24,8 @@ export default function createEditorBodyElementTitle(elementDedails, parentEleme
   $(".editorBodyElementTitle").on("mouseout", function() {
     $(this).css({
       "color": "gray",
-      "border-color": "lightgray"
+      "border-color": "lightgray",
+      "font-weight": "normal"
     });
   });
 }

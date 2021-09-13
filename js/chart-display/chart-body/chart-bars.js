@@ -1,27 +1,28 @@
 import colorPalette from '../../color-palette.js';
+import calculateWidthOfBarChartComponents from '../../bar-area-width.js';
 
 export default function createChartBars(data, element) {
   let heightOfCurrentBar;
 
+  let barChartComponentsWidth = calculateWidthOfBarChartComponents(
+    data.noOfColumns, $(".chartAreaContainer")
+  );
+
   if(data.singleStack) {
     for(let i = 0; i < data.noOfColumns; i++) {
-      heightOfCurrentBar = data.heightOfEachRangePoint * data.rawDataValues[i];
-      // eslint-disable-next-line radix
-      heightOfCurrentBar = Math.floor(heightOfCurrentBar) + "px";
-
+      heightOfCurrentBar = (data.rawDataValues[i] * 100) / (data.yAxisRangeGap * data.noOfRows);
       element.append(
         '<div class="chartAreaBar chartAreaBar-' + (i + 1) + '"><span>' + data.rawDataValues[i] + '<span></div>'
       );
       $(".chartAreaBar-" + (i + 1)).css({
-        "height": heightOfCurrentBar,
-        "width": data.widthOfEachBarInPerc + "%",
+        "height": heightOfCurrentBar + "%",
+        "width": barChartComponentsWidth.widthOfEachBarInPerc + "%",
         "background-color": colorPalette[0]["dark"],
         "color": colorPalette[0]["fontColor"],
         "display": "flex",
         "justify-content": "center"
       });
     }
-    console.log(colorPalette[0]["dark"]);
   }
   else {
 
@@ -65,22 +66,19 @@ export default function createChartBars(data, element) {
       );
       $(".chartAreaBarColumn-" + (i + 1)).css({
         "height": "100%",
-        "width": data.widthOfEachBarInPerc + "%",
+        "width": barChartComponentsWidth.widthOfEachBarInPerc + "%",
         "display": "flex",
         "flex-direction": "column-reverse",
         "justify-content": "flex-start"
       });
       for(let j = 0; j < data.rawDataStackValues[i].length; j++) {
-        heightOfCurrentBar = data.heightOfEachRangePoint * data.rawDataStackValues[i][j];
-        // eslint-disable-next-line radix
-        heightOfCurrentBar = Math.floor(heightOfCurrentBar) + "px";
-        console.log(data.rawDataStackValues[i][j]);
+        heightOfCurrentBar = (data.rawDataStackValues[i][j] * 100) / (data.yAxisRangeGap * data.noOfRows);
         $(".chartAreaBarColumn-" + (i + 1)).append(
           '<div class="chartAreaBar chartAreaBar-' + (j + 1) + ' chartAreaBar-' + (i + 1) + '-' + (j + 1) + '"><span>' + data.rawDataStackValues[i][j] + '<span></div>'
         );
 
         $(".chartAreaBar-" + (i + 1) + "-" + (j + 1)).css({
-          "height": heightOfCurrentBar,
+          "height": heightOfCurrentBar + "%",
           "width": "100%",
           "display": "flex",
           "justify-content": "center"

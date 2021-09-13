@@ -1,19 +1,20 @@
-export default function createYAxisDataPointsContainer(noOfRows, barChartComponentsHeight, element) {
-  var currentMark = barChartComponentsHeight.chartAreaRowMark;
+export default function createYAxisDataPointsContainer(noOfRows, yAxisRangeGap, element) {
+  var currentMark = yAxisRangeGap;
 
   for(var i = 0; i < noOfRows; i++) {
     element.append(
       '<div class="yAxisDataPointContainer yAxisDataPointContainer-' + (i + 1) + '"></div>'
     );
     $(".yAxisDataPointContainer-" + (i + 1)).css({
-      "height": barChartComponentsHeight.chartAreaRowMarkHeight + "px",
+      "flex": "1",
+      /* "height": barChartComponentsHeight.chartAreaRowMarkHeight + "px", */
       "display": "flex",
       "justify-content": "flex-end",
       "align-items": "flex-start"
     });
 
     $(".yAxisDataPointContainer-" + (i + 1)).append(
-      '<div class="yAxisDataPointText yAxisDataPointText-' + (i + 1) + '">' + currentMark + '</div>'
+      '<div class="yAxisDataPointText yAxisDataPointText-' + (i + 1) + '">' + currentMark.toFixed(1) + '</div>'
     );
     $(".yAxisDataPointText-" + (i + 1)).css({
       "transform": "translateY(-50%)",
@@ -29,6 +30,7 @@ export default function createYAxisDataPointsContainer(noOfRows, barChartCompone
       "background-color": "gray"
     });
 
-    currentMark += barChartComponentsHeight.chartAreaRowMark;
+    currentMark += yAxisRangeGap;
+    console.log(currentMark);
   }
 }

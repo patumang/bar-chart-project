@@ -23,22 +23,23 @@ export default function createBarValuePositionBody(element) {
   $(".barValuePosition").css({
     "font-size": "11px",
     "padding":"2px",
-    "color": "rgb(0, 60, 179)",
     /* "border-bottom": "solid 1px rgb(0, 60, 179)", */
     "cursor": "pointer"
   });
 
   $(".barValuePosition").on("mouseover", function() {
     $(this).css({
-      "color": "rgb(102, 153, 255)",
-      /* "border-color": "rgb(102, 153, 255)", */
-      "font-weight": "bold"
+      "font-weight": "bold",
+      "border": "solid .5px #ADE8F4",
+      "border-radius": "5px",
+      "background-color": "#EDFAFD"
     });
   });
   $(".barValuePosition").on("mouseout", function() {
     $(this).css({
-      "color": "rgb(0, 60, 179)"/* ,
-      "border-color": "rgb(0, 60, 179)" */
+      "font-weight": "normal",
+      "background-color": "transparent",
+      "border": "none"
     });
   });
 }
