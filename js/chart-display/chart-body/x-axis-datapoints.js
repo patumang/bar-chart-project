@@ -23,6 +23,16 @@ export default function createXAxisDataPointsContainer(options, element) {
     $("." + options.uniuqeChartId + "_xAxisDataPointContainer-" + (i + 1)).append(
       '<div class="' + options.uniuqeChartId + '_xAxisDataPointText ' + options.uniuqeChartId + '_xAxisDataPointText-' + (i + 1) + '">' + options.rawDataKeys[i] + '</div>'
     );
+
+    if (options.noOfColumns ===9) {
+    $("." + options.uniuqeChartId + "_xAxisDataPointText").css({
+      "margin-left": "25px",
+      "-ms-transform": "rotate(-90deg) translate(calc(-50% + 15px), -40%)",
+      "-webkit-transform": "rotate(-90deg) translate(calc(-50% + 15px), -40%)",
+      "transform": "rotate(-90deg) translate(calc(-50% + 5px), -50%)",
+      "white-space": "nowrap"
+    });
+  }
   }
 }
 

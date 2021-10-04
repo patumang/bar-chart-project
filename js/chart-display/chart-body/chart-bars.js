@@ -85,8 +85,8 @@ export default function createChartBars(options, element) {
         });
 
         $("." + options.uniuqeChartId + "_chartAreaBar-" + (j + 1)).css({
-          "background-color": colorPalette[j]["dark"],
-          "color": colorPalette[j]["fontColor"]
+          "background-color": colorPalette[j+4]["dark"],
+          "color": colorPalette[j+4]["fontColor"]
         });
       }
     }
